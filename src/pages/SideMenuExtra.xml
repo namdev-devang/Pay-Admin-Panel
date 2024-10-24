@@ -1,0 +1,245 @@
+<Menu
+              // defaultSelectedKeys={["1"]}
+              mode="inline"
+              className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
+            >
+              <Menu.Item key="1">
+                <Link to="/home">
+                  <HomeFilled />
+                  <span>Dashboard</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/services/mobile-recharges">
+                  <HomeFilled />
+                  <span>Services</span>
+                </Link>
+              </Menu.Item>
+              {/* 1  */}
+              <SubMenu
+                key="sub1"
+                icon={<BulbFilled />}
+                title={
+                  "Master"
+                  // <span>
+                  // <BulbFilled />
+                  // <span>Master</span>
+                  // </span>
+                }
+              >
+                <Link to="/master-services">
+                  <Menu.Item key="3"> - Services</Menu.Item>
+                </Link>
+                <Link to={"/master-banners"}>
+                  <Menu.Item key="4"> - Banners</Menu.Item>
+                </Link>
+                <Link to={"/master-affilliate-banners"}>
+                  <Menu.Item key="5"> - Affilliate Banners</Menu.Item>
+                </Link>
+                <Link to={"/master-otps"}>
+                  <Menu.Item key="6"> - OTP's</Menu.Item>
+                </Link>
+              </SubMenu>
+
+              {/* 2 */}
+              {/* <SubMenu
+                title={
+                  <span>
+                    <ShoppingFilled />
+                    <span>Shopping</span>
+                  </span>
+                }
+              >
+                <Menu.Item> - Category</Menu.Item>
+                <Menu.Item> - Business Category</Menu.Item>
+                <Menu.Item> - Sub Category</Menu.Item>
+                <Menu.Item> - Product</Menu.Item>
+                <Menu.Item> - Orders</Menu.Item>
+                <Menu.Item> - Service Area</Menu.Item>
+              </SubMenu> */}
+
+              {/* 3  */}
+              <SubMenu
+                key="sub2"
+                title={
+                  "Manage User"
+                  // <span>
+                  // <UserAddOutlined />
+                  // <span>Manage User</span>
+                  // </span>
+                }
+                icon={<UserAddOutlined />}
+              >
+                <Link to="/users-list">
+                  <Menu.Item key="7"> - List</Menu.Item>
+                </Link>
+
+                <Link to={"/user-list-kyc-request"}>
+                  <Menu.Item key="8"> - Kyc Request</Menu.Item>
+                </Link>
+
+                <Link to={"/user-list-sub-category"}>
+                  <Menu.Item key="9"> - Sub Category</Menu.Item>
+                </Link>
+
+                <Link to={"/user-list-new-kyc-request"}>
+                  <Menu.Item key="10"> - New Kyc Request</Menu.Item>
+                </Link>
+
+                <Link to={"/user-list-withdraw-request"}>
+                  <Menu.Item key="11"> - Withdraw Request</Menu.Item>
+                </Link>
+              </SubMenu>
+
+              {/* 4  */}
+              {/* <SubMenu
+                key="sub4"
+                title={
+                  <span>
+                    <UserAddOutlined />
+                    <span>Merchants</span>
+                  </span>
+                }
+              >
+                <Menu.Item> - List</Menu.Item>
+                <Menu.Item> - Kyc Request</Menu.Item>
+                <Menu.Item> - Sub Category</Menu.Item>
+                <Menu.Item> - New Kyc Request</Menu.Item>
+                <Menu.Item> - Withdraw Request</Menu.Item>
+              </SubMenu> */}
+
+              {/* 5  */}
+              <Menu.Item key="12">
+                <Link to={"/wallet/credit"}>
+                  <span className="flex items-center gap-3">
+                    <WalletFilled />
+                    <span>Wallets</span>
+                  </span>
+                </Link>
+              </Menu.Item>
+
+              {/* <Link to={"/prime-point/credit"}>
+                <Menu.Item> - PrimePoints</Menu.Item>
+              </Link> */}
+              {/* 6  */}
+              <SubMenu
+                key="sub3"
+                title={
+                  "Reports"
+                  // <span className="flex items-center gap-3">
+                  // <FileSearchOutlined />
+                  // <span>Reports</span>
+                  // </span>
+                }
+                icon={<FileSearchOutlined />}
+              >
+                <Link to={"/bbps-reports"}>
+                  <Menu.Item key="13"> - BBPS Reports</Menu.Item>
+                </Link>
+                <Link to={"/dth-recharge"}>
+                  <Menu.Item key="14"> - Dth Recharge</Menu.Item>
+                </Link>
+
+                <Link to="/mobile-recharge">
+                  <Menu.Item key="15"> - Mobile Recharge</Menu.Item>
+                </Link>
+              </SubMenu>
+
+              {/* 7 */}
+              <Menu.Item key="16">
+                <Link to="/refound-request">
+                  <span className="flex items-center gap-3">
+                    <GlobalOutlined />
+                    <span>Refound Request</span>
+                  </span>
+                </Link>
+              </Menu.Item>
+              {/* 8  */}
+              <SubMenu
+                key="sub4"
+                title={
+                  "Transactions"
+                  // <span className="flex items-center gap-3">
+                  // <TransactionOutlined />
+                  // <span>Transactions</span>
+                  // </span>
+                }
+                icon={<TransactionOutlined />}
+              >
+                <Link to="/transaction">
+                  <Menu.Item key="18"> - Transactions</Menu.Item>
+                </Link>
+                <Link to={"/admin-transaction"}>
+                  <Menu.Item key="19"> - Admin Transactions</Menu.Item>
+                </Link>
+              </SubMenu>
+              {/* 9  */}
+              <Menu.Item key="20">
+                <Link to="/nortification">
+                  <span className="flex items-center gap-3">
+                    <BellFilled />
+                    <span>Nortification</span>
+                  </span>
+                </Link>
+              </Menu.Item>
+
+              {/* 10  */}
+              <Menu.Item key="21">
+                <Link to="/affiliate-store">
+                  <span className="flex items-center gap-3">
+                    <DeploymentUnitOutlined />
+                    <span>Affiliate Store</span>
+                  </span>
+                </Link>
+              </Menu.Item>
+
+              {/* 11  */}
+              <Menu.Item key="22">
+                <Link to="/ip-address">
+                  <IeOutlined />
+                  <span>IP Address</span>
+                </Link>
+              </Menu.Item>
+
+              {/* 12  */}
+              <Menu.Item key="23">
+                <Link to="/">
+                  <GiftFilled />
+                  <span>Gift Cards</span>
+                </Link>
+              </Menu.Item>
+              {/* 13  */}
+              <Menu.Item key="24" danger={true}>
+                <Link to="/setting">
+                  <SettingFilled />
+                  <span>Settings</span>
+                </Link>
+              </Menu.Item>
+
+              <div className="invisible">
+                <Menu.Item>
+                  <Link to="/">
+                    <SettingFilled />
+                    <span>Settings</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/">
+                    <SettingFilled />
+                    <span>Settings</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/">
+                    <SettingFilled />
+                    <span>Settings</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/">
+                    <SettingFilled />
+                    <span>Settings</span>
+                  </Link>
+                </Menu.Item>
+              </div>
+            </Menu>

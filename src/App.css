@@ -1,0 +1,12 @@
+.ant-table-thead .ant-table-cell {
+  background-color: #D8D6EC !important;
+
+}
+/* .ant-table-column .ant-table-cell:nth-child(even){
+  background-color: #D8D6EC !important;
+
+} */
+.ant-table-tbody .ant-table-row:nth-child(even) {
+  background-color: #f4f3ff;
+}
+
