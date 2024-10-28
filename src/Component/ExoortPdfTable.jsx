@@ -7,7 +7,7 @@ import { CiExport } from "react-icons/ci";
 const ExoortPdfTable = () => {
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
-  const dataSource = savedData.map((i) => ({
+  const dataSource = savedData?.map((i) => ({
     id: i.id,
     name: i.name,
     phone: i.phone,

@@ -1,44 +1,93 @@
-import { Column } from '@ant-design/plots';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
+import { Column } from "@ant-design/plots";
 
-const data = [
-  { type: '1-3秒', value: 0.16 },
-  { type: '4-10秒', value: 0.125 },
-  { type: '11-30秒', value: 0.24 },
-  { type: '31-60秒', value: 0.19 },
-  { type: '1-3分', value: 0.22 },
-  { type: '3-10分', value: 0.05 },
-  { type: '10-30分', value: 0.01 },
-  { type: '30+分', value: 0.015 },
-];
+const Chart2 = () => {
+  const Data = [
+    {
+      loginuser: "22/10/2022",
+      logoutuser: "01/02/2025",
+    },
+    { loginuser: "03/15/2022", logoutuser: "05/21/2025" },
+    { loginuser: "08/09/2021", logoutuser: "12/30/2024" },
+    { loginuser: "11/23/2023", logoutuser: "04/07/2026" },
+    { loginuser: "05/05/2022", logoutuser: "09/15/2025" },
+    { loginuser: "07/13/2020", logoutuser: "10/31/2023" },
+    { loginuser: "02/28/2023", logoutuser: "06/20/2026" },
+    { loginuser: "09/01/2019", logoutuser: "11/12/2023" },
+    { loginuser: "04/10/2024", logoutuser: "08/25/2027" },
+    { loginuser: "06/15/2021", logoutuser: "03/18/2024" },
+    { loginuser: "01/10/2022", logoutuser: "09/27/2025" },
+    {
+      loginuser: "22/10/2022",
+      logoutuser: "01/02/2025",
+    },
+    {
+      loginuser: "03/15/2022",
+      logoutuser: "05/21/2025",
+    },
+    {
+      loginuser: "08/09/2021",
+      logoutuser: "12/30/2024",
+    },
+    {
+      loginuser: "11/23/2023",
+      logoutuser: "04/07/2026",
+    },
+    {
+      loginuser: "05/05/2022",
+      logoutuser: "09/15/2025",
+    },
+    {
+      loginuser: "07/13/2020",
+      logoutuser: "10/31/2023",
+    },
+    {
+      loginuser: "02/28/2023",
+      logoutuser: "06/20/2026",
+    },
+    {
+      loginuser: "02/28/2023",
+      logoutuser: "06/20/2026",
+    },
+    {
+      loginuser: "04/10/2024",
+      logoutuser: "08/25/2027",
+    },
+    {
+      loginuser: "06/15/2021",
+      logoutuser: "03/18/2024",
+    },
+    {
+      loginuser: "01/10/2022",
+      logoutuser: "09/27/2025",
+    },
+  ];
 
-const Charts2 = () => {
+  const chartRef = useRef();
+  useEffect(() => {
+    console.log({ chartRef });
+  }, []);
+
   const config = {
-    data,
-    xField: 'type',
-    yField: 'value',
-    style: {
-      fill: ({ type }) => {
-        if (type === '10-30分' || type === '30+分') {
-          return '#22CBCC';
-        }
-        return '#2989FF';
+    data: {
+      type: "fetch",
+      value:
+        "https://gw.alipayobjects.com/os/bmw-prod/c48dbbb1-fccf-4a46-b68f-a3ddb4908b68.json",
+    },
+    xField: "date",
+    yField: "value",
+    slider: {
+      x: {
+        values: [0.1, 0.2],
+      },
+      y: {
+        // type: 'linear',
+        // range: [0.2, 0.8],
+        /* 其他配置项 */
       },
     },
-    label: {
-      text: (originData) => {
-        const val = parseFloat(originData.value);
-        if (val < 0.05) {
-          return (val * 100).toFixed(1) + '%';
-        }
-        return '';
-      },
-      offset: 10,
-    },
-    legend: false,
   };
-  return <Column {...config} />;
+  return <Column {...config} ref={chartRef} />;
 };
-export default Charts2;
- 
+export default Chart2;

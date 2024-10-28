@@ -1,47 +1,40 @@
 import { Line } from "@ant-design/plots";
+import { Line, Line } from "@ant-design/plots/es/core/plots/line";
 import React, { useState, useEffect } from "react";
 
 const Charts = () => {
   const [data, setData] = useState([]);
-  console.log(data, "ee");
+  console.log(data, "data")
   useEffect(() => {
     asyncFetch();
   }, []);
 
   const asyncFetch = () => {
     fetch(
-      "https://gw.alipayobjects.com/os/bmw-prod/c48dbbb1-fccf-4a46-b68f-a3ddb4908b68.json"
+      "https://dummyjson.com/products"
     )
       .then((response) => response.json())
-      .then((json) => setData(json))
+      .then((res) => setData(res.products))
       .catch((error) => {
         console.log("fetch data failed", error);
       });
   };
   const config = {
     data,
-    xField: "date",
-    yField: "value",
+    xField: "price",
+    yField: "discountPercentage",
     colorField: "type",
-    axis: {
-      y: {
-        labelFormatter: (v) =>
-          `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
-      },
-    },
     scale: { color: { range: ["#30BF78", "#F4664A", "#FAAD14"] } },
-    style: {
-      lineWidth: 2,
-      lineDash: (data) => {
-        if (data[0].type === "register") return [4, 4];
-      },
-      opacity: (data) => {
-        if (data[0].type !== "register") return 0.5;
-      },
-    },
+  
   };
 
   return <Line {...config} />;
 };
 
 export default Charts;
+
+
+
+
+
+

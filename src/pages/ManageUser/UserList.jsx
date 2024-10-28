@@ -13,32 +13,29 @@ import { Dropdown } from "antd";
 import { CopyOutlined, DownOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { FiSearch } from "react-icons/fi";
-import { CiExport } from "react-icons/ci";
-import FilterDrawer from "../ManageUser/Drawer/FilterDrawer";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { Option } from "antd/es/mentions";
 import DatePickerComp from "../../Component/DatePickerComp";
 import ExportPdfTable from "../../Component/ExoortPdfTable";
 import StatusCheckFilter from "../../Component/StatusCheckFilter";
 import { FaUserEdit } from "react-icons/fa";
 import UpdateUserDrawer from "../Report/UpdateUserDrawer";
-// import InputSearchComp from "../../Component/InputSearchComp";
 
 const UserList = () => {
   const [searched, setSearched] = useState("");
   const [selectField, setselectField] = useState("name");
   const [selectedUser, setSelectedUser] = useState(null);
-  console.log(selectedUser);
-  const [users, setUsers] = useState(null);
-  // console.log(users);
+
+  // console.log(holdData)
+  console.log(selectedUser, "s");
+
+  const [users, setUsers] = useState([]);
+  console.log(users, "user");
   const [showInput, setShowInput] = useState({
     id: "",
     status: false,
   });
-
   const [referId, setReferId] = useState();
-  // console.log(selectedUser);
 
   const showDrawer = (user) => {
     setSelectedUser(user);
@@ -51,9 +48,13 @@ const UserList = () => {
   };
 
   const handleSave = () => {
-    const updatedUsers = users?.map((user) =>
+    const storedData = JSON.parse(localStorage.getItem("dataSource")) || [];
+
+    const updatedUsers = storedData.map((user) =>
       user?.id === selectedUser?.id ? selectedUser : user
     );
+
+    localStorage.setItem("dataSource", JSON.stringify(updatedUsers));
     setUsers(updatedUsers);
     setOpen(false);
   };
@@ -317,7 +318,7 @@ const UserList = () => {
 
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
-  const dataSource = savedData.map((i) => ({
+  const dataSource = savedData?.map((i) => ({
     id: i.id,
     name: i.name,
     phone: i.phone,
@@ -326,7 +327,7 @@ const UserList = () => {
     registration: i.registration,
     ip: "106.209.176.177",
     address: "-",
-    status: "Active",
+    status: i?.status,
     mpin: 1234,
     balance: 100,
     action: true,
@@ -390,14 +391,6 @@ const UserList = () => {
 
   return (
     <>
-      {/* {users?.map((user) => (
-        <div key={user.id} className="my-5">
-          <h1 className="font-semibold text-lg">{user.name}</h1>
-          <p className="text-gray-600">{user.email}</p>
-          <p className="text-gray-600">{user.status}</p>
-        </div>
-      ))} */}
-
       <div>
         <Drawer width={520} closable={false} onClose={onClose} open={open}>
           <div className="mx-4">

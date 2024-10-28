@@ -1,5 +1,4 @@
 import React from "react";
-import { UsergroupDeleteOutlined } from "@ant-design/icons";
 import { Button, Card, DatePicker, Space } from "antd";
 import { FaUserGroup } from "react-icons/fa6";
 import Charts from "../Chart/Charts";
@@ -7,7 +6,6 @@ import Charts2 from "../Chart/Charts2";
 import Table_Pagination from "../Component/Table_Pagination";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
-import { GrUpdate } from "react-icons/gr";
 import UpdateUserDrawer from "./Report/UpdateUserDrawer";
 const items = [
   {
@@ -74,24 +72,25 @@ const Home = () => {
       number: "15,45,94,225",
     },
   ];
+
   return (
     <>
       <div className=" md:p-4">
-        <div className="flex justify-between mx-4">
-          <h1 className="lg:text-xl font-bold text-indigo-700">
+        <div className="flex justify-between mx-4 my-4">
+          <h1 className="lg:text-2xl font-bold text-indigo-700">
             User Analytics
           </h1>
           <Space direction="vertical">
             <RangePicker
               className="sm:w-full w-32"
               disabledDate={disabled6MonthsDate}
-              picker="month"
+              // picker="month"
             />
           </Space>
         </div>
 
         {/* cards  */}
-        <div className=" flex flex-wrap">
+        <div className=" flex flex-wrap mx-14 sm:mx-0">
           {cardData.map((item) => {
             return (
               <>
@@ -119,33 +118,36 @@ const Home = () => {
           })}
         </div>
 
-        <div className="flex w-full">
-          <div className="border border-gray-300 lg:w-[67%] w-full rounded-xl shadow-xl sm:my-0 my-4">
-            <div className="border-b p-4 flex items-center justify-between">
-              <h1 className="font-bold text-lg mx-4">User Onboarding</h1>
-              <div className="">
-                <Button className="bg-gray-100 py-5">
-                  <Dropdown
-                    className=""
-                    menu={{
-                      items,
-                    }}
-                    trigger={["click"]}
-                  >
-                    <a onClick={(e) => e.preventDefault()}>
-                      <Space>
-                        <h1 className="mr-5 text-black font-semibold">Today</h1>
-                        <DownOutlined />
-                      </Space>
-                    </a>
-                  </Dropdown>
-                </Button>
-              </div>
+        <div className="border border-gray-300  w-full rounded-xl shadow-xl sm:my-0 my-4">
+          <div className="border-b p-4 flex items-center justify-between">
+            <h1 className="font-bold text-lg mx-4">User Onboarding</h1>
+            <div className="">
+              <Button className="bg-gray-100 py-5">
+                <Dropdown
+                  className=""
+                  menu={{
+                    items,
+                  }}
+                  trigger={["click"]}
+                >
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      <h1 className="mr-5 text-black font-semibold">Today</h1>
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>
+              </Button>
             </div>
-            <Charts />
           </div>
-          <div className=" lg:w-[38%]  lg:mx-4 border border-gray-300 w-full  rounded-xl shadow-xl">
-            <Charts2 />
+
+          <div className="flex flex-wrap rounded-lg my-2 lg:gap-2 gap-5 mx-">
+            <div className="md:w-[64%] w-[100%] shadow-lg">
+              <Charts />
+            </div>
+            <div className="shadow-lg rounded-xl py-2 md:w-[35%] w-full ">
+              <Charts2 />
+            </div>
           </div>
         </div>
 

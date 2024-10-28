@@ -5,7 +5,6 @@ import "../App.css";
 import {
   BulbFilled,
   HomeFilled,
-  UserAddOutlined,
   IeOutlined,
   GiftFilled,
   SettingFilled,
@@ -15,18 +14,12 @@ import {
   GlobalOutlined,
   BellFilled,
   DeploymentUnitOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  UserOutlined,
   TeamOutlined,
-  FileOutlined,
-  HomeOutlined,
 } from "@ant-design/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
-import { FaBell, FaRegCommentDots, FaWallet } from "react-icons/fa";
-import { AiOutlineFileSearch, AiOutlineTransaction } from "react-icons/ai";
-import { TbBellRinging, TbWorld } from "react-icons/tb";
+import { Link, useNavigate, } from "react-router-dom";
+import { FaRegCommentDots, } from "react-icons/fa";
+import { TbBellRinging,  } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp, IoMdTransgender } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
 
@@ -166,6 +159,7 @@ const Index = (ChildComponent) => () => {
   const navigate = useNavigate();
   const [toggle, settoggle] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+
   const handleToggle = () => setCollapsed(!collapsed);
 
   const handeltoggle = () => {
@@ -254,24 +248,27 @@ const Index = (ChildComponent) => () => {
       <div className="flex relative h-full">
         <div id="sidebardScroll" className="z-10 ">
           {/* <Sidebar /> */}
-          <div className="logo" />
+
+          <div className="absolute md:static transition-all duration-100 ease-linear">
           <Sider
             collapsed={collapsed}
             onCollapse={handleToggle}
             className="bg-white"
           >
             <Menu
-              defaultSelectedKeys={["1"]}
+              // defaultSelectedKeys={pathname}
               mode="inline"
               className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
               items={items}
             />
           </Sider>
+          </div>
+
         </div>
 
         <div
           className={` ${
-            collapsed ? "w-full" : "w-11/12  ml-24"
+            collapsed ? "w-full ml-20" : "w-full  ml-20"
           } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
         >
           <ChildComponent />

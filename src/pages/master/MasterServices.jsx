@@ -451,7 +451,7 @@ const MasterServices = () => {
               </div>
 
               <div className="sm:mt-0 mt-4 ">
-                <Select 
+                <Select
                   className="text- border font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 mx-4"
                   defaultValue="All"
                   value={selectOption}
