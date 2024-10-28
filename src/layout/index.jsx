@@ -20,7 +20,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useNavigate, } from "react-router-dom";
 import { FaRegCommentDots, } from "react-icons/fa";
 import { TbBellRinging,  } from "react-icons/tb";
-import { IoIosArrowDown, IoIosArrowUp, IoMdTransgender } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
 
 const { Sider } = Layout;
