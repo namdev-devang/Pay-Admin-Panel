@@ -314,7 +314,7 @@ const UserList = () => {
     },
   ];
 
-  // localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
+  localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
 
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
@@ -340,7 +340,7 @@ const UserList = () => {
   };
 
   const [open, setOpen] = useState(false);
-  const [selectOption, setselectOption] = useState("All");
+  // const [selectOption, setselectOption] = useState("All");
 
   const doc = new jsPDF();
   const getYearMonth = (date) => date.year() * 12 + date.month();
