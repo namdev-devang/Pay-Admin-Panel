@@ -217,7 +217,7 @@ const Login = () => {
 
  {/* 2 Position  */}
     <div className="md:hidden block bg-white p-4 md:rounded-lg">
-          <div className="my-16 px-4">
+          <div className="my-4 px-4">
             <img
               className=""
               src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
@@ -303,7 +303,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="px-4 text-center text-[14px] my-6 font-semibold text-gray-400">
+            <div className="px-4 text-center text-[14px] my-3 font-semibold text-gray-400">
               By continuing you agree to our{" "}
               <span className="text-blue-700 font-semibold hover:underline">
                 privacy policy

@@ -174,9 +174,9 @@ const Index = (ChildComponent) => () => {
     <div className="h-screen overflow-hidden bg-[#fafcff]">
       <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md">
         <div className=" flex gap-2 items-center">
-          <div className="border-[#e4e4e4] sm:ml-14 flex gap-5 items-center">
+          <div className="border-[#e4e4e4] sm:ml-14 flex md:gap-5 gap-4 items-center">
             <img
-              className="w-28"
+              className="md:w-28 w-[100px]"
               src="https://upload.wikimedia.org/wikipedia/commons/7/77/Razorpay_logo.png"
               alt=""
             />
@@ -207,17 +207,17 @@ const Index = (ChildComponent) => () => {
           <div className="flex gap-2">
             <div>
               <img
-                className="w-10 rounded-full object-cover"
+                className="md:w-10 w-7 rounded-full object-cover"
                 src="https://e7.pngegg.com/pngimages/136/22/png-clipart-user-profile-computer-icons-girl-customer-avatar-angle-heroes-thumbnail.png "
                 alt=""
                 srcset=""
               />
             </div>
 
-            <div onClick={handeltoggle} className="flex items-center gap-6">
+            <div onClick={handeltoggle} className="flex items-center md:gap-6 gap-2">
               <div>
-                <h1 className="text-[#221ECF] font-bold">Super Admin</h1>
-                <h1 className="text-sm text-gray-600">vipswallet@gm.com</h1>
+                <h1 className="text-[#221ECF] font-bold md:text-base text-xs ">Super Admin</h1>
+                <h1 className="text-sm text-gray-600 md:text-base text-xs">vipswallet@gm.com</h1>
               </div>
               {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </div>

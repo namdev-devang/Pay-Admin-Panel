@@ -90,7 +90,7 @@ const Home = () => {
         </div>
 
         {/* cards  */}
-        <div className=" flex flex-wrap mx-14 sm:mx-0">
+        <div className=" flex flex-wrap  sm:mx-0">
           {cardData.map((item) => {
             return (
               <>
@@ -118,7 +118,7 @@ const Home = () => {
           })}
         </div>
 
-        <div className="border border-gray-300  w-full rounded-xl shadow-xl sm:my-0 my-4">
+        <div className="border   w-full rounded-xl  sm:my-0 my-4">
           <div className="border-b p-4 flex items-center justify-between">
             <h1 className="font-bold text-lg mx-4">User Onboarding</h1>
             <div className="">
@@ -141,11 +141,11 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap rounded-lg my-2 lg:gap-2 gap-5 mx-">
-            <div className="md:w-[64%] w-[100%] shadow-lg">
+          <div className="flex flex-wrap rounded-lg my-5 mx-4 lg:gap-2 gap-5 ">
+            <div className="border md:w-[64%] w-[100%] shadow-lg rounded-lg">
               <Charts />
             </div>
-            <div className="shadow-lg rounded-xl py-2 md:w-[35%] w-full ">
+            <div className="border shadow-lg rounded-xl py-2 md:w-[35%] w-full">
               <Charts2 />
             </div>
           </div>
