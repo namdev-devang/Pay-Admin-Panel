@@ -262,7 +262,7 @@ const Index = (ChildComponent) => () => {
 
         <div
           className={` ${
-            collapsed ? "w-full ml-20" : "w-full  ml-20"
+            collapsed ? "w-full ml-" : "w-full  ml-20"
           } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
         >
           <ChildComponent />

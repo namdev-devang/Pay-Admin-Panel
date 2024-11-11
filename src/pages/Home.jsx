@@ -84,7 +84,7 @@ const Home = () => {
             <RangePicker
               className="sm:w-full w-32"
               disabledDate={disabled6MonthsDate}
-              // picker="month"
+            // picker="month"
             />
           </Space>
         </div>
@@ -94,14 +94,13 @@ const Home = () => {
           {cardData.map((item) => {
             return (
               <>
-                <Space className="lg:mx-2 lg:my-4" direction="">
+                <Space className="lg:mx-2 lg:my-4 mx-2" direction="">
                   <Card
                     // activeTabKey="home"
-                    className={` ${
-                      item.id == 1
+                    className={` ${item.id == 1
                         ? "bg-[#221ecf] text-white "
                         : "bg-white text-black"
-                    }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+                      }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
                     style={{
                       width: 300,
                     }}
