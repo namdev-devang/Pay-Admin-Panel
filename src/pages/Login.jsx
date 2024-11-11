@@ -303,7 +303,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="px-4 text-center text-[14px] absolute bottom-[40px] left-4 font-semibold text-gray-400">
+            <div className="px-4 text-center text-[14px] my-6 font-semibold text-gray-400">
               By continuing you agree to our{" "}
               <span className="text-blue-700 font-semibold hover:underline">
                 privacy policy
