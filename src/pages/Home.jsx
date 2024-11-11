@@ -90,7 +90,7 @@ const Home = () => {
         </div>
 
         {/* cards  */}
-        <div className=" flex flex-wrap  sm:mx-0">
+        <div className=" flex flex-wrap sm:mx-0">
           {cardData.map((item) => {
             return (
               <>
@@ -100,16 +100,14 @@ const Home = () => {
                     className={` ${item.id == 1
                         ? "bg-[#221ecf] text-white "
                         : "bg-white text-black"
-                      }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
-                    style={{
-                      width: 300,
-                    }}
+                      } w-[250px] md:w-[300px]  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+                    
                   >
                     <div className="flex items-center justify-between">
-                      <p className="text-base py-1">{item.name}</p>
+                      <p className="md:text-base py-1">{item.name}</p>
                       <FaUserGroup className="text-2xl mx-2" />
                     </div>
-                    <h1 className="text-2xl">15,45,94,225</h1>
+                    <h1 className="md:text-2xl text-base">15,45,94,225</h1>
                   </Card>
                 </Space>
               </>
@@ -117,9 +115,9 @@ const Home = () => {
           })}
         </div>
 
-        <div className="border   w-full rounded-xl  sm:my-0 my-4">
-          <div className="border-b p-4 flex items-center justify-between">
-            <h1 className="font-bold text-lg mx-4">User Onboarding</h1>
+        <div className="border w-full rounded-xl mx-2 sm:my-0 my-4">
+          <div className="border-b px-2 py-2 flex items-center justify-between ">
+            <h1 className="font-bold md:text-lg text-base mx-4">User Onboarding</h1>
             <div className="">
               <Button className="bg-gray-100 py-5">
                 <Dropdown
@@ -140,7 +138,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap rounded-lg my-5 mx-4 lg:gap-2 gap-5 ">
+          <div className="flex flex-wrap rounded-lg my-5 mx-2 lg:gap-2 gap-5 ">
             <div className="border lg:w-[64%] w-[100%] shadow-lg rounded-lg">
               <Charts />
             </div>
