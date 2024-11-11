@@ -89,9 +89,9 @@ const Login = () => {
 
   return (
     <>
-    <div className="md:block hidden bgImage w-full h-screen">
+    <div className="md:block hidden bgImage  h-screen">
       <div className="flex justify-between py-3 px-5">
-        <div className="mt-14 mx-7">
+        <div className="mt-14 mx-7 ">
           <img
             className="w-32"
             src="https://accounts.razorpay.com/assets/razorpay/logo-dark.svg"
@@ -99,8 +99,8 @@ const Login = () => {
           />
         </div>
 
-        <div className="bg-white md:w-1/4 h-[97vh] p-2 md:rounded-lg">
-          <div className="my-36 px-14">
+            <div className="bg-white md:w-[40%]  xl:w-1/4 h-[97vh]  md:rounded-lg">
+          <div className="xl:my-36 xl:px-10 md:my-20 md:px-5">
             <img
               className=""
               src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
@@ -110,7 +110,7 @@ const Login = () => {
               Welcome to{" "}
               <span className="font-bold text-[15px]">Razorpay Payments</span>
             </h1>
-            <h1 className="text-black md:text-3xl font-semibold">
+            <h1 className="text-black xl:text-3xl text-xl font-semibold">
               Get started with your email or phone number
             </h1>
             <Form>
@@ -172,9 +172,9 @@ const Login = () => {
               )}
             </Form>
 
-            <h1 className="text-center my-10 border-b">or</h1>
+            <h1 className="text-center border-b">or</h1>
 
-            <div className="flex items-center justify-between border border-gray-300 rounded-md p-2">
+            <div className="flex items-center justify-between border border-gray-300 rounded-md p-2 my-4">
               <div className="">
                 <h1 className="font-semibold text-gray-800 text-[12px]">
                   Continue as Devang
@@ -187,7 +187,7 @@ const Login = () => {
               </div>
             </div>
             
-            <div className="text-center text-[14px] left14 absolute bottom-[40px] font-semibold text-gray-400">
+            {/* <h1 className=" text-[14px] sm:absolute bottom-[40px] font-semibold text-gray-400">
               By continuing you agree to our{" "}
               <span className="text-blue-500 font-semibold hover:underline">
                 privacy policy
@@ -197,11 +197,12 @@ const Login = () => {
                 {" "}
                 terms of use
               </span>
-            </div>
+            </h1> */}
           </div>
         </div>
 
-        <div className="absolute bottom-24 lg:left-[68px] text-white w-[35%] text-4xl font-semibold">
+
+        {/* <div className="lg:absolute bottom-24 lg:left-[68px] text-white w-[35%] text-4xl font-semibold">
           <h1>
             Join <span className="text-[#49d08c]">8 Million</span> Businesses
             that Trust Razorpay to Supercharge their Business
@@ -211,7 +212,7 @@ const Login = () => {
             <h1 className="text-lg">Easy Integration</h1>
             <h1 className="text-lg">Powerful Dashboard</h1>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
 
@@ -303,7 +304,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="px-4 text-center text-[14px] my-3 font-semibold text-gray-400">
+            <div className="absolute bottom-0 left-auto px-4 text-[14px] my-3 font-semibold text-gray-400">
               By continuing you agree to our{" "}
               <span className="text-blue-700 font-semibold hover:underline">
                 privacy policy
