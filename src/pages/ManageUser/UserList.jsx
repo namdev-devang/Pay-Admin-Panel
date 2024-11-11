@@ -256,7 +256,7 @@ const UserList = () => {
       email: "deepak.com",
       referedby: false,
       registration: "04 Oct, 2024, 16:18 PM",
-      ip: "106.209.176.177",
+      ip: "204.177.158.209",
       address: "-",
       status: "Active",
       mpin: 1234,
@@ -314,7 +314,7 @@ const UserList = () => {
     },
   ];
 
-  localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
+  // localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
 
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
@@ -325,7 +325,7 @@ const UserList = () => {
     email: i.email,
     referedby: i.referedby,
     registration: i.registration,
-    ip: "106.209.176.177",
+    ip: i.ip,
     address: "-",
     status: i?.status,
     mpin: 1234,

@@ -17,10 +17,10 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useNavigate, } from "react-router-dom";
-import { FaRegCommentDots, } from "react-icons/fa";
-import { TbBellRinging,  } from "react-icons/tb";
-import { IoIosArrowDown, IoIosArrowUp, } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import { FaRegCommentDots } from "react-icons/fa";
+import { TbBellRinging } from "react-icons/tb";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
 
 const { Sider } = Layout;
@@ -172,8 +172,7 @@ const Index = (ChildComponent) => () => {
   };
   return (
     <div className="h-screen overflow-hidden bg-[#fafcff]">
-      {/* <Header handleToggle={handleToggle} /> */}
-      <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md px-5">
+      <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md">
         <div className=" flex gap-2 items-center">
           <div className="border-[#e4e4e4] sm:ml-14 flex gap-5 items-center">
             <img
@@ -242,28 +241,23 @@ const Index = (ChildComponent) => () => {
           )}
         </div>
       </div>
-
-      {/* <hr /> */}
-
+      
       <div className="flex relative h-full">
         <div id="sidebardScroll" className="z-10 ">
-          {/* <Sidebar /> */}
-
           <div className="absolute md:static transition-all duration-100 ease-linear">
-          <Sider
-            collapsed={collapsed}
-            onCollapse={handleToggle}
-            className="bg-white"
-          >
-            <Menu
-              // defaultSelectedKeys={pathname}
-              mode="inline"
-              className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
-              items={items}
-            />
-          </Sider>
+            <Sider
+              collapsed={collapsed}
+              onCollapse={handleToggle}
+              className="bg-white"
+            >
+              <Menu
+                // defaultSelectedKeys={pathname}
+                mode="inline"
+                className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
+                items={items}
+              />
+            </Sider>
           </div>
-
         </div>
 
         <div

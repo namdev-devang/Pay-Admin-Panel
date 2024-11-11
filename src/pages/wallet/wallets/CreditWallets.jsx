@@ -98,7 +98,7 @@ const CreditWallets = () => {
     <>
       <>
         <div className=" flex flex-wrap justify-between items-center mb-5">
-          <div className="mx-auto sm:mx-0">
+          <div className="flex mx-auto sm:mx-0">
             <Space className="lg:mx-2 " direction="">
               <Link to="/wallet/credit">
                 <Card
@@ -218,13 +218,13 @@ const CreditWallets = () => {
                     {/* </Space> */}
                     <FiSearch className="mx-2 text-xl" />
                   </div>
-                  <div className="lg:flex flex-wrap items-center gap-5 lg:mx-0 mx-5">
+                  <div className="lg:flex flex-wrap items-center gap-5 ">
                     {/* <Button className="bg-gray-50 py-5 mb-3 lg:mb-0"> */}
                     <DatePickerComp />
                     {/* </Button> */}
 
                     {/* Filter_Drawer  ⭐*/}
-                      <div className="lg:my-0 my-2">
+                      <div className="flex lg:my-0 my-2">
                     <Button
                       onClick={ExportPdfTable}
                       className="bg-green-50 py-5 px-4 border border-green-500 mx-3"
