@@ -231,14 +231,29 @@ const Login = () => {
               Get started with your email or phone number
             </h1>
             <Form>
-              <Input
-                value={phoneNumber}
-                onChange={handlePhoneChange}
-                className="mt-12 mb-3 py-2 border border-gray-200 text-base"
-                placeholder="Enter phone number"
+            <Input
+                // value={phoneNumber}
+                // onChange={handlePhoneChange}
+                type="email"
+                name="emaill"
+                value={formVal?.emaill}
+                onChange={handelChange || handleEmailChange}
+                className="mt-12  py-2 border border-gray-200 text-base"
+                placeholder="Enter Email"
+                // maxLength={10}
+              />
+              <Input.Password
+                // value={phoneNumber}
+                // onChange={handlePhoneChange}
+                name="password"
+                value={formVal?.password}
+                onChange={handelChange}
+                // type="password"
+                className="my-4 py-2 border border-gray-200 text-base"
+                placeholder="Enter password"
                 maxLength={10}
               />
-              {dropdown ? (
+              {/* {dropdown ? (
                 <Input
                   className="my-4"
                   placeholder="Enter OTP"
@@ -246,11 +261,11 @@ const Login = () => {
                   onChange={handleOtpChange}
                   maxLength={6}
                 />
-              ) : null}
+              ) : null} */}
 
               {!otpSent ? (
                 <Button
-                  onClick={handleSendOtp}
+                  onClick={handelLogin}
                   block
                   className="py-5"
                   style={{ backgroundColor: "#2e5bff", color: "white" }}
