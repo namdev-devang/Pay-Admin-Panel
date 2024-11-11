@@ -142,10 +142,10 @@ const Home = () => {
           </div>
 
           <div className="flex flex-wrap rounded-lg my-5 mx-4 lg:gap-2 gap-5 ">
-            <div className="border md:w-[64%] w-[100%] shadow-lg rounded-lg">
+            <div className="border lg:w-[64%] w-[100%] shadow-lg rounded-lg">
               <Charts />
             </div>
-            <div className="border shadow-lg rounded-xl py-2 md:w-[35%] w-full">
+            <div className="border shadow-lg rounded-xl py-2 lg:w-[35%] w-full">
               <Charts2 />
             </div>
           </div>
