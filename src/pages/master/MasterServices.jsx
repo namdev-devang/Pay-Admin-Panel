@@ -415,7 +415,7 @@ const MasterServices = () => {
         <h1 className="text-3xl font-bold text-[#221ECF] my-4">Services</h1>
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md ">
-            <div className="flex flex-wrap justify-between">
+            <div className="flex items-center flex-wrap justify-between">
               <div className="flex items-center bg-gray-50 border lg:py-[4px] lg:px-2 rounded-md mb-4 lg:mb-0">
                 {/* <Button className=" py-5"> */}
                 <Select
@@ -450,7 +450,7 @@ const MasterServices = () => {
                 <FiSearch className="mx-2 lg:text-xl text-4xl  " />
               </div>
 
-              <div className="sm:mt-0 mt-4 ">
+              <div className="sm:mt-0 flex items-center ">
                 <Select
                   className="text- border font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 mx-4"
                   defaultValue="All"

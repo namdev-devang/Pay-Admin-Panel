@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Form, Typography, message } from "antd";
+import { Button, Input, Form, Typography, message, Checkbox } from "antd";
 const { Title } = Typography;
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
@@ -19,28 +19,23 @@ const Login = () => {
     password: "",
   });
   
+  
     const handelChange = (e) => {
       setFormVal({ ...formVal, [e.target.name]: e.target.value });
     };
   
-    const handelLogin = (e) => {
-      e.preventDefault();
-      if (formVal.emaill && formVal.password) {
-        if (
-          formVal.emaill === "admin@gmail.com" &&
-          formVal.password === "12345"
-        ) {
-          localStorage.setItem("token", "Token");
-          navigate("/home");
-          message.success("login sucessfully")
-        } else {
-          message.error("Wrong User Validate");
-        }
-      } else {
-        document.getElementById("emaill").style.border = "1px solid red";
-        document.getElementById("password").style.border = "1px solid red";
-      }
-    };
+
+  const handelLogin = (values) => {
+    const { email, password } = values;
+
+    if (email === "admin@gmail.com" && password === "12345") {
+      localStorage.setItem("token", "Token");
+      navigate("/home");
+      message.success("Login successfully!");
+    } else {
+      message.error("Invalid email or password!");
+    }
+  };
   
     const handleEmailChange = (e) => {
       const inputEmail = e.target.value;
@@ -113,64 +108,84 @@ const Login = () => {
             <h1 className="text-black xl:text-3xl text-xl font-semibold">
               Get started with your email or phone number
             </h1>
-            <Form>
-              <Input
-                // value={phoneNumber}
-                // onChange={handlePhoneChange}
-                type="email"
-                name="emaill"
-                value={formVal?.emaill}
-                onChange={handelChange || handleEmailChange}
-                className="mt-12  py-2 border border-gray-200 text-base"
-                placeholder="Enter Email"
-                // maxLength={10}
-              />
-              <Input.Password
-                // value={phoneNumber}
-                // onChange={handlePhoneChange}
-                name="password"
-                value={formVal?.password}
-                onChange={handelChange}
-                // type="password"
-                className="my-4 py-2 border border-gray-200 text-base"
-                placeholder="Enter password"
-                maxLength={10}
-              />
-              {/* {dropdown ? (
-                <Input
-                  className="my-4"
-                  placeholder="Enter OTP"
-                  // value={otp}
-                  // onChange={handleOtpChange}
-                  maxLength={6}
-                />
-              ) : null} */}
+            {/* form  */}
+  {/* <Form
+    name="basic"
+    // onFinish={onFinish || handelLogin}
+    // onClick={handelLogin}
+    autoComplete="off"
+  >
+    <Form.Item
+      name="email"
+      value={formVal?.emaill}
+      onChange={handelChange || handleEmailChange}
+      className="mt-12  py-2 bordertext-base"
+      rules={[
+        {
+          required: true,
+          message: 'Please input your email!',
+        },
+      ]}
+    >
+      <Input placeholder="Entre your email "/>
+    </Form.Item>
 
-              {!otpSent ? (
-                <Button
-                  // onClick={handleSendOtp}
-                  onClick={handelLogin}
-                  block
-                  className="py-5 my-4"
-                  style={{ backgroundColor: "#2e5bff", color: "white" }}
-                >
-                  <span className="text-white font-semibold text-lg">
-                    Login
-                  </span>
-                </Button>
-              ) : (
-                <Button
-                  // onClick={handleVerifyOtp}
-                  block
-                  className="py-5"
-                  style={{ backgroundColor: "#49d08c", color: "white" }}
-                >
-                  <span className="text-white font-semibold text-lg">
-                    Verify OTP
-                  </span>
-                </Button>
-              )}
-            </Form>
+    <Form.Item
+      name="password"
+      className="my-4 py-2 text-base"
+      value={formVal?.password}
+      onChange={handelChange}
+      rules={[
+        {
+          required: true,
+          message: 'Please input your password!',
+        },
+      ]}
+    >
+      <Input.Password placeholder="Entre your password" />
+    </Form.Item>
+
+    <Form.Item label={null}>
+      <Button onSubmit={handelLogin} block type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+  </Form> */}
+
+    <Form
+      // name="loginForm"
+      onFinish={handelLogin}
+      autoComplete="off"
+      layout="vertical"
+    >
+      <Form.Item
+        // label="Email"
+        name="email"
+      className="mt-12  py-2 bordertext-base"
+
+        rules={[
+          { required: true, message: "Please input your email!" },
+          { type: "email", message: "Please enter a valid email!" },
+        ]}
+      >
+        <Input placeholder="Enter your email" />
+      </Form.Item>
+
+      <Form.Item  
+        // label="Password"
+        name="password"
+    className="my-4 py-2 text-base"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password placeholder="Enter your password" />
+      </Form.Item>
+
+      <Form.Item>
+        <Button block type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
 
             <h1 className="text-center border-b">or</h1>
 
@@ -202,7 +217,7 @@ const Login = () => {
         </div>
 
 
-        {/* <div className="lg:absolute bottom-24 lg:left-[68px] text-white w-[35%] text-4xl font-semibold">
+        {/* <div className="lg:absolute bottom-24 lg:left-[68px] text-white w-[35%] md:text-4xl  font-semibold">
           <h1>
             Join <span className="text-[#49d08c]">8 Million</span> Businesses
             that Trust Razorpay to Supercharge their Business
@@ -231,63 +246,41 @@ const Login = () => {
             <h1 className="text-black text-2xl font-semibold">
               Get started with your email or phone number
             </h1>
-            <Form>
-            <Input
-                // value={phoneNumber}
-                // onChange={handlePhoneChange}
-                type="email"
-                name="emaill"
-                value={formVal?.emaill}
-                onChange={handelChange || handleEmailChange}
-                className="mt-12  py-2 border border-gray-200 text-base"
-                placeholder="Enter Email"
-                // maxLength={10}
-              />
-              <Input.Password
-                // value={phoneNumber}
-                // onChange={handlePhoneChange}
-                name="password"
-                value={formVal?.password}
-                onChange={handelChange}
-                // type="password"
-                className="my-4 py-2 border border-gray-200 text-base"
-                placeholder="Enter password"
-                maxLength={10}
-              />
-              {/* {dropdown ? (
-                <Input
-                  className="my-4"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={handleOtpChange}
-                  maxLength={6}
-                />
-              ) : null} */}
+            
+            <Form
+      // name="loginForm"
+      onFinish={handelLogin}
+      autoComplete="off"
+      layout="vertical"
+    >
+      <Form.Item
+        // label="Email"
+        name="email"
+      className="mt-12  py-2 bordertext-base"
 
-              {!otpSent ? (
-                <Button
-                  onClick={handelLogin}
-                  block
-                  className="py-5"
-                  style={{ backgroundColor: "#2e5bff", color: "white" }}
-                >
-                  <span className="text-white font-semibold text-lg">
-                    Login
-                  </span>
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleVerifyOtp}
-                  block
-                  className="py-5"
-                  style={{ backgroundColor: "#49d08c", color: "white" }}
-                >
-                  <span className="text-white font-semibold text-lg">
-                    Verify OTP
-                  </span>
-                </Button>
-              )}
-            </Form>
+        rules={[
+          { required: true, message: "Please input your email!" },
+          { type: "email", message: "Please enter a valid email!" },
+        ]}
+      >
+        <Input placeholder="Enter your email" />
+      </Form.Item>
+
+      <Form.Item
+        // label="Password"
+        name="password"
+    className="my-4 py-2 text-base"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password placeholder="Enter your password" />
+      </Form.Item>
+
+      <Form.Item>
+        <Button block type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
 
             <h1 className="text-center my-10 ">or</h1>
 

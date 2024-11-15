@@ -24,7 +24,6 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuSearch } from "react-icons/lu";
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -241,7 +240,7 @@ const Index = (ChildComponent) => () => {
           )}
         </div>
       </div>
-      
+
       <div className="flex relative h-full">
         <div id="sidebardScroll" className="z-10 ">
           <div className="absolute md:static transition-all duration-100 ease-linear">
@@ -250,8 +249,7 @@ const Index = (ChildComponent) => () => {
               onCollapse={handleToggle}
               className="bg-white"
             >
-              <Menu
-                // defaultSelectedKeys={pathname}
+              <Menu 
                 mode="inline"
                 className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
                 items={items}
@@ -261,9 +259,8 @@ const Index = (ChildComponent) => () => {
         </div>
 
         <div
-          className={` ${
-            collapsed ? "w-full ml-16 md:ml-0 " : "w-full  ml-20"
-          } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
+          className={` ${collapsed ? "w-full ml-16 md:ml-0 " : "w-full  ml-20"
+            } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
         >
           <ChildComponent />
         </div>

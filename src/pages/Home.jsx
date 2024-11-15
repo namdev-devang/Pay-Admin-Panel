@@ -148,10 +148,10 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="my-4 ">
+        <div className="my-4 mx-2 ">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md">
             <div className="flex justify-between items-center">
-              <h1 className="text-xl font-bold">Recent Customers</h1>
+              <h1 className="sm:text-xl font-bold">Recent Customers</h1>
               <UpdateUserDrawer />
             </div>
             <Table_Pagination />

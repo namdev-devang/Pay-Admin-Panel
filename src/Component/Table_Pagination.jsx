@@ -51,6 +51,10 @@ const Table_Pagination = () => {
       title: <h1 className="text-[#323197] text-lg font-bold">Location</h1>,
       dataIndex: "completed",
     },
+    {
+      title: <h1 className="text-[#323197] text-lg font-bold">Action</h1>,
+      dataIndex: "completed",
+    },
   ];
 
   const fetchrecords = () => {
@@ -68,7 +72,7 @@ const Table_Pagination = () => {
     <>
       <div className="my-4">
         <Table
-          className="overflow-x-scroll no-scrollbar bg-white  rounded-lg mx-"
+          className="overflow-x-scroll no-scrollbar bg-white  rounded-lg "
           loading={loading}
           columns={columns}
           dataSource={dataScoure}

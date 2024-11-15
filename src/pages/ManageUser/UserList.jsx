@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Drawer,
+  Form,
   message,
   Select,
   Space,
@@ -401,59 +402,84 @@ const UserList = () => {
               </Button>
             </div>
             {selectedUser && (
-              <div className="mt-10">
+              <Form
+                onFinish={handleSave}
+                autoComplete="off"
+                layout="vertical"
+              >
                 <div className="my-5">
                   <h1 className="text-black text-base my-1 font-semibold">
                     Edit Name
                   </h1>
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-xl"
-                    value={selectedUser.name}
-                    onChange={(e) =>
-                      setSelectedUser({
+
+                  <Form.Item
+                    name="name"
+                    rules={[
+                      { required: true, message: "Please entre input your name!" },
+                    ]}
+                  >
+                    <Input
+                      value={selectedUser?.name}
+                      onChange={(e) => setSelectedUser({
                         ...selectedUser,
-                        name: e.target.value,
-                      })
-                    }
-                  />
+                        name: e.target.value
+                      })}
+                      className="py-3 border border-gray-300 text-black text-xl"
+                      placeholder="Entre your name" />
+                  </Form.Item>
                 </div>
 
                 <div className="my-5">
                   <h1 className="text-black text-base my-1 font-semibold">
                     Edit Email
                   </h1>
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-xl"
-                    value={selectedUser.email}
-                    onChange={(e) =>
-                      setSelectedUser({
+                  <Form.Item
+                    name="email"
+                    rules={[
+                      { type: 'email', required: true, message: "Please entre your vaild email!" }
+                    ]}
+                  >
+                    <Input
+                      value={selectedUser?.email}
+                      onChange={(e) => setSelectedUser({
                         ...selectedUser,
-                        email: e.target.value,
-                      })
-                    }
-                  />
+                        email: e.target.value
+                      })}
+                      placeholder="Entre your email"
+                      className="py-3 border border-gray-300 text-black text-xl"
+                    />
+                  </Form.Item>
+
                 </div>
 
                 <div className="my-5">
                   <h1 className="text-black text-base my-1 font-semibold">
                     Status
                   </h1>
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-xl"
-                    value={selectedUser.status}
-                    onChange={(e) =>
-                      setSelectedUser({
+                  <Form.Item
+                    name="status"
+                    rules={[
+                      { required: true, message: 'please entre your status!' }
+                    ]}
+                  >
+
+                    <Input
+                      value={selectedUser?.status}
+                      onChange={(e) => setSelectedUser({
                         ...selectedUser,
-                        status: e.target.value,
-                      })
-                    }
-                  />
+                        status: e.target.value
+                      })}
+                      placeholder="Entre your status"
+                      className="py-3 border border-gray-300 text-black text-xl"
+                    />
+                  </Form.Item>
                 </div>
+
 
                 <div className="gap-4">
                   <Button
+                    htmlType="submit"
                     className="bg-[#CA3160] text-lg px-7 py-6 rounded-lg font-semibold text-white"
-                    onClick={handleSave}
                   >
                     Save
                   </Button>
@@ -464,8 +490,9 @@ const UserList = () => {
                     Cancel
                   </Button>
                 </div>
-              </div>
+              </Form>
             )}
+
           </div>
         </Drawer>
 
