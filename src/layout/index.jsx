@@ -166,7 +166,7 @@ const Index = (ChildComponent) => () => {
   };
 
   const handelLogOut = () => {
-    localStorage.clear("token");
+    localStorage.removeItem("refreshToken");
     navigate("/");
   };
   return (
