@@ -1,86 +1,68 @@
 import React, { useState } from "react";
-import { Button, Input, Form, Typography, message, Checkbox } from "antd";
-const { Title } = Typography;
+import { Button, Input, Form, message} from "antd";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authLogin } from "../redux/actions/authAction";
 
 const Login = () => {
   const [dropdown, setDropdown] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
+  const dispatch = useDispatch()
+  const navigate =useNavigate()
 
+  // const handellogin = () => {
+
+  // }
   // email Id features 
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [isValid, setIsValid] = useState(true);
-  const [formVal, setFormVal] = useState({
-    emaill: "",
-    password: "",
-  });
-  
-  
-    const handelChange = (e) => {
-      setFormVal({ ...formVal, [e.target.name]: e.target.value });
-    };
-  
 
-  const handelLogin = (values) => {
-    const { email, password } = values;
-
-    if (email === "admin@gmail.com" && password === "12345") {
-      localStorage.setItem("token", "Token");
+  const handleLogin = async (values) => {
+    const resultAction = await dispatch(authLogin(values)); // `values` contains `username` and `password`
+    if (authLogin.fulfilled.match(resultAction)) {
+      message.success('login successfully')
       navigate("/home");
-      message.success("Login successfully!");
-    } else {
-      message.error("Invalid email or password!");
+    }else{
+      message.error("Invalid credentials")
     }
   };
+    
   
-    const handleEmailChange = (e) => {
-      const inputEmail = e.target.value;
-      setEmail(inputEmail);
-  
-      // Regular expression for basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailRegex.test(inputEmail);
-  
-      setIsValid(isValidEmail);
-    };
     
 
   // Otp Features 
-  const handlePhoneChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
+  // const handlePhoneChange = (e) => {
+  //   setPhoneNumber(e.target.value);
+  // };
 
-  const handleOtpChange = (e) => {
-    setOtp(e.target.value);
-  };
+  // const handleOtpChange = (e) => {
+  //   setOtp(e.target.value);
+  // };
 
-  const validatePhoneNumber = () => {
-    const phonePattern = /^[0-9]{10}$/;
-    return phonePattern.test(phoneNumber);
-  };
+  // const validatePhoneNumber = () => {
+  //   const phonePattern = /^[0-9]{10}$/;
+  //   return phonePattern.test(phoneNumber);
+  // };
 
-  const handleSendOtp = () => {
-    if (!validatePhoneNumber()) {
-      message.error("Please enter a valid 10-digit phone number.");
-      return;
-    }
+  // const handleSendOtp = () => {
+  //   if (!validatePhoneNumber()) {
+  //     message.error("Please enter a valid 10-digit phone number.");
+  //     return;
+  //   }
 
-    message.success("OTP sent successfully!");
-    setDropdown(true);
-    setOtpSent(true);
-  };
+  //   message.success("OTP sent successfully!");
+  //   setDropdown(true);
+  //   setOtpSent(true);
+  // };
 
-  const handleVerifyOtp = () => {
-    if (!otp) {
-      message.error("Please enter the OTP.");
-    } else {
-      message.success("OTP verified successfully!");
-    }
-  };
+  // const handleVerifyOtp = () => {
+  //   if (!otp) {
+  //     message.error("Please enter the OTP.");
+  //   } else {
+  //     message.success("OTP verified successfully!");
+  //   }
+  // };
 
   return (
     <>
@@ -109,79 +91,39 @@ const Login = () => {
               Get started with your email or phone number
             </h1>
             {/* form  */}
-  {/* <Form
-    name="basic"
-    // onFinish={onFinish || handelLogin}
-    // onClick={handelLogin}
-    autoComplete="off"
-  >
-    <Form.Item
-      name="email"
-      value={formVal?.emaill}
-      onChange={handelChange || handleEmailChange}
-      className="mt-12  py-2 bordertext-base"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your email!',
-        },
-      ]}
-    >
-      <Input placeholder="Entre your email "/>
-    </Form.Item>
-
-    <Form.Item
-      name="password"
-      className="my-4 py-2 text-base"
-      value={formVal?.password}
-      onChange={handelChange}
-      rules={[
-        {
-          required: true,
-          message: 'Please input your password!',
-        },
-      ]}
-    >
-      <Input.Password placeholder="Entre your password" />
-    </Form.Item>
-
-    <Form.Item label={null}>
-      <Button onSubmit={handelLogin} block type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form> */}
 
     <Form
       // name="loginForm"
-      onFinish={handelLogin}
+      onFinish={handleLogin}
       autoComplete="off"
       layout="vertical"
     >
       <Form.Item
         // label="Email"
-        name="email"
-      className="mt-12  py-2 bordertext-base"
+        name="username"
 
         rules={[
           { required: true, message: "Please input your email!" },
-          { type: "email", message: "Please enter a valid email!" },
+          // { type: "email", message: "Please enter a valid email!" },
         ]}
       >
-        <Input placeholder="Enter your email" />
+        <Input
+                className="mt-12  py-2 border border-gray-200 text-base"
+                placeholder="Enter username..." />
       </Form.Item>
 
       <Form.Item  
         // label="Password"
         name="password"
-    className="my-4 py-2 text-base"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input.Password placeholder="Enter your password" />
+        <Input.Password
+                className=" py-2 border border-gray-200 text-base"
+                placeholder="Enter password..." />
       </Form.Item>
 
       <Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button className="my-4 py-5" block type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>
@@ -249,30 +191,31 @@ const Login = () => {
             
             <Form
       // name="loginForm"
-      onFinish={handelLogin}
+      onFinish={handleLogin}
       autoComplete="off"
       layout="vertical"
     >
       <Form.Item
         // label="Email"
-        name="email"
-      className="mt-12  py-2 bordertext-base"
+        name="username"
 
         rules={[
           { required: true, message: "Please input your email!" },
-          { type: "email", message: "Please enter a valid email!" },
         ]}
       >
-        <Input placeholder="Enter your email" />
+        <Input
+        className="mt-12  py-2 text-base"
+         placeholder="Enter your email" />
       </Form.Item>
 
       <Form.Item
         // label="Password"
         name="password"
-    className="my-4 py-2 text-base"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input.Password placeholder="Enter your password" />
+        <Input.Password
+        className="my-4 py-2 text-base"
+        placeholder="Enter your password" />
       </Form.Item>
 
       <Form.Item>

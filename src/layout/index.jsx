@@ -249,7 +249,7 @@ const Index = (ChildComponent) => () => {
               onCollapse={handleToggle}
               className="bg-white"
             >
-              <Menu 
+              <Menu
                 mode="inline"
                 className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
                 items={items}
@@ -259,7 +259,7 @@ const Index = (ChildComponent) => () => {
         </div>
 
         <div
-          className={` ${collapsed ? "w-full ml-16 md:ml-0 " : "w-full  ml-20"
+          className={` ${collapsed ? "w-full ml-20 md:ml-0 " : "w-full  ml-24"
             } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
         >
           <ChildComponent />

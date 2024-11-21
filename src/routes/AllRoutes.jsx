@@ -191,6 +191,13 @@ const AllRoutes = [
     private: true,
     element: <DebitWallets />,
   },
+  
+  {
+    name: "Gift-card",
+    path: "gift-card",
+    private: true,
+    element: <GiftCards />,
+  },
 ];
 
 export default AllRoutes;

@@ -7,6 +7,8 @@ import Table_Pagination from "../Component/Table_Pagination";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
 import UpdateUserDrawer from "./Report/UpdateUserDrawer";
+import { useDispatch, useSelector } from "react-redux";
+
 const items = [
   {
     label: <a href="https://www.antgroup.com">1st menu item</a>,
@@ -46,6 +48,7 @@ const disabled6MonthsDate = (current, { from, type }) => {
   return false;
 };
 const Home = () => {
+
   const cardData = [
     {
       id: 1,
@@ -98,10 +101,10 @@ const Home = () => {
                   <Card
                     // activeTabKey="home"
                     className={` ${item.id == 1
-                        ? "bg-[#221ecf] text-white "
-                        : "bg-white text-black"
+                      ? "bg-[#221ecf] text-white "
+                      : "bg-white text-black"
                       } w-[250px] md:w-[300px]  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
-                    
+
                   >
                     <div className="flex items-center justify-between">
                       <p className="md:text-base py-1">{item.name}</p>

@@ -4,7 +4,7 @@ import Layout from "../layout/index";
 import axios from "axios";
 
 const PrivateRoutes = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("refreshToken");
 
   return <>{token ? <Outlet /> : <Navigate to={"/"} />}</>;
 };

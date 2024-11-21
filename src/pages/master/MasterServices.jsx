@@ -18,7 +18,14 @@ const MasterServices = () => {
   const [searched, setSearched] = useState("");
   const [selectOption, setselectOption] = useState("All");
   const [selectField, setselectField] = useState("service");
-  console.log(selectField);
+  const [SelectUpdateStatus] = useState("")
+  console.log(SelectUpdateStatus, 'sksksk',)
+  const [SelectedUser, setSelectedUser] = useState(null)
+  const [user, setUser] = useState([])
+  console.log(user, 'users')
+  console.log(SelectedUser, "SelectedUser")
+
+
   const handelSelectChange = (e) => {
     setselectOption(e.target.value);
   };
@@ -31,8 +38,17 @@ const MasterServices = () => {
     setOpen(false);
   };
 
+  const handelSave = () => {
+    const lsStoreData = JSON.parse(localStorage.getItem("datasource")) || []
+
+    const updateUser = lsStoreData.map((item) => item?.srno === SelectedUser?.srno ? SelectedUser : item)
+    localStorage.setItem("datasource", JSON.stringify(updateUser))
+    // setUser(updateUser)
+    setOpen(false)
+
+  }
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    // console.log(`selected ${value}`);
   };
 
   const items = [
@@ -101,6 +117,7 @@ const MasterServices = () => {
     {
       title: <h1 className="text-[#323197] text-lg font-bold">Action</h1>,
       dataIndex: "action",
+      key: "action",
       render: (text, record) => (
         <div>
           <Button type="primary" className="py-4">
@@ -115,10 +132,10 @@ const MasterServices = () => {
                         {/* {users.map((user) => ( */}
                         <spna
                           className="flex items-center font-semibold mx-2 gap-1 text-base"
-                          // onClick={() => {
-                          // setSelectedUser(record);
-                          // setOpen(true);
-                          // }}
+                          onClick={() => {
+                            setSelectedUser(record)
+                            setOpen(true)
+                          }}
                         >
                           <FaUserEdit className="text-base" />
                           Edit
@@ -152,266 +169,136 @@ const MasterServices = () => {
     },
   ];
 
-  const dataSource = [
+  const savedData = JSON.parse(localStorage.getItem("datasource"))
+
+
+  const dataSource = savedData?.map((i) => ({
+    srno: i.srno,
+    service: i.service,
+    debit: i.debit,
+    repurchase: i.repurchase,
+    credit: i.credit,
+    primepoint: i.primepoint,
+    status: i?.status,
+    action: true,
+  }));
+
+  const dataArr = [
     {
-      srno: <h1 className="text-base ">1</h1>,
+      srno: 1,
       service: "Digital Marketing",
-      debit: <h1 className="text-base text-gray-600">10.00</h1>,
-      repurchase: <h1 className="text-base text-gray-600">5</h1>,
-      credit: <h1 className="text-base text-gray-600">12.50</h1>,
-      primepoint: <h1 className="text-base text-gray-600">30.00</h1>,
+      debit: "10.00",
+      repurchase: "5",
+      credit: "12.50",
+      primepoint: 3.50,
       status: "Active",
-      // <h1
-      //   onClick={showDrawer}
-      //   className="cursor-pointer text-base text-green-500 font-semibold"
-      // >
-      //   Active
-      // </h1>
-      action: (
-        <Button
-          defaultHoverBg={false}
-          className="py-4 bg-[#323197] hover:text-black "
-        >
-          <Dropdown
-            className=""
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <h1 className="text-white hover:text-black font-semibold text-base">
-                  Actions
-                </h1>
-                <DownOutlined className="text-white " />
-              </Space>
-            </a>
-          </Dropdown>
-        </Button>
-      ),
     },
     {
-      srno: <h1 className="text-base ">2</h1>,
+      srno: 2,
       service: "Web Hosting",
-      debit: <h1 className="text-base text-gray-600">20.00</h1>,
-      repurchase: <h1 className="text-base text-gray-600">8</h1>,
-      credit: <h1 className="text-base text-gray-600">25.00</h1>,
-      primepoint: <h1 className="text-base text-gray-600">45.00</h1>,
+      debit: 20.00,
+      repurchase: 8,
+      credit: 25.00,
+      primepoint: 45.00,
       status: "Pending",
-      // <h1
-      //   onClick={showDrawer}
-      //   className="cursor-pointer text-base text-yellow-500 font-semibold"
-      // >
-      //   Pending
-      // </h1>
-      action: (
-        <Button
-          defaultHoverBg={false}
-          className="py-4 bg-[#323197] hover:text-black "
-        >
-          <Dropdown
-            className=""
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <h1 className="text-white hover:text-black font-semibold text-base">
-                  Actions
-                </h1>
-                <DownOutlined className="text-white " />
-              </Space>
-            </a>
-          </Dropdown>
-        </Button>
-      ),
     },
     {
-      srno: <h1 className="text-base ">3</h1>,
+      srno: 3,
       service: "SEO Optimization",
-      debit: <h1 className="text-base text-gray-600">15.00</h1>,
-      repurchase: <h1 className="text-base text-gray-600">2</h1>,
-      credit: <h1 className="text-base text-gray-600">18.00</h1>,
-      primepoint: <h1 className="text-base text-gray-600">35.00</h1>,
+      debit: 15.00,
+      repurchase: 2,
+      credit: 18.00,
+      primepoint: 15.00,
       status: "Blocked",
-      // <h1
-      //   onClick={showDrawer}
-      //   className="cursor-pointer text-base text-red-500 font-semibold"
-      // >
-      //   Blocked
-      // </h1>
-      action: (
-        <Button
-          defaultHoverBg={false}
-          className="py-4 bg-[#323197] hover:text-black "
-        >
-          <Dropdown
-            className=""
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <h1 className="text-white hover:text-black font-semibold text-base">
-                  Actions
-                </h1>
-                <DownOutlined className="text-white " />
-              </Space>
-            </a>
-          </Dropdown>
-        </Button>
-      ),
     },
     {
-      srno: <h1 className="text-base ">4</h1>,
+      srno: 4,
       service: "Cloud Services",
-      debit: <h1 className="text-base text-gray-600">5.00</h1>,
-      repurchase: <h1 className="text-base text-gray-600">1</h1>,
-      credit: <h1 className="text-base text-gray-600">7.00</h1>,
-      primepoint: <h1 className="text-base text-gray-600">20.00</h1>,
+      debit: 5.00,
+      repurchase: 1,
+      credit: 7.00,
+      primepoint: 20.00,
       status: "Active",
-      // <h1
-      //   onClick={showDrawer}
-      //   className="cursor-pointer text-base text-green-500 font-semibold"
-      // >
-      //   Active
-      // </h1>
-      action: (
-        <Button
-          defaultHoverBg={false}
-          className="py-4 bg-[#323197] hover:text-black "
-        >
-          <Dropdown
-            className=""
-            menu={{
-              items,
-            }}
-            trigger={["click"]}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <h1 className="text-white hover:text-black font-semibold text-base">
-                  Actions
-                </h1>
-                <DownOutlined className="text-white " />
-              </Space>
-            </a>
-          </Dropdown>
-        </Button>
-      ),
     },
   ];
 
-  const filterSelectData =
-    selectOption && selectOption !== "All"
-      ? dataSource.filter((item) => item.status === selectOption)
-      : dataSource;
+  // localStorage.setItem("datasource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
+
+  const displayData = selectOption && selectOption !== "All" ? dataSource.filter((item) => item.status === selectOption) : dataSource;
 
   console.log("Selected Option:", selectOption);
-  console.log("Filtered Data:", filterSelectData);
+  // console.log("Filtered Data:", filterSelectData);
+
 
   return (
     <>
       <div>
-        <Drawer width={420} closable={false} onClose={onClose} open={open}>
-          <div className="flex items-center justify-between my-3">
-            <h1 className="text-2xl font-bold text-[#5a58eb]">Edit Services</h1>
-            <RxCross1 onClick={onClose} className="cursor-pointer text-xl" />
-          </div>
-          <div className="mt-10">
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Service
-              </h1>
-              <Input
-                className="py-3 border border-gray-300 text-black  text-xl"
-                placeholder="Affiliate Shopping"
-              />
-            </div>
+        {
+          SelectedUser && (
+            <Drawer width={420} closable={false} onClose={onClose} open={open}>
+              <div className="flex items-center justify-between my-3">
+                <h1 className="text-2xl font-bold text-[#5a58eb]">Edit Services</h1>
+                <RxCross1 onClick={onClose} className="cursor-pointer text-xl" />
+              </div>
+              <div className="mt-10">
+                <div className="my-5">
+                  <h1 className="text-black text-base my-1 font-semibold">
+                    Service
+                  </h1>
+                  <Input
+                    value={SelectedUser?.service}
+                    onChange={(e) => setSelectedUser({
+                      ...SelectedUser,
+                      service: e.target.value
+                    })
+                    }
+                    className="py-3 border border-gray-300 text-black  text-xl"
+                    placeholder="Affiliate Shopping"
+                  />
+                </div>
 
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Shopping Percentage
-              </h1>
-              <Input
-                className="py-3 border border-gray-300 text-black  text-xl"
-                placeholder="Affiliate Shopping"
-              />
-            </div>
+                <div className="my-5">
+                  <h1 className="text-black text-base my-1 font-semibold">
+                    Status
+                  </h1>
+                  <Select
+                    style={{
+                      height: 52,
+                    }}
+                    className="w-full  border-gray-300 text-black rounded-md"
+                    // bordered={false}
+                    value={SelectUpdateStatus.length === 0 ? SelectedUser?.status : SelectUpdateStatus}
+                    onChange={(val) => setSelectedUser({
+                      ...SelectedUser,
+                      status: val
+                    })}
+                  // onChange={(e) => setSelectedUser({
+                  //   ...SelectedUser,
+                  //   status: e.target.value
+                  // })}
+                  >
+                    <Option
+                      value="Active">Active</Option>
+                    <Option
+                      value="Pending">Pending</Option>
+                    <Option
+                      value="Blocked">Blocked</Option>
+                  </Select>
+                </div>
 
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Prime Percentage
-              </h1>
-              <Input
-                className="py-3 border border-gray-300 text-black  text-xl"
-                placeholder="Affiliate Shopping"
-              />
-            </div>
+              </div>
+              <div className="">
+                <Button
+                  onClick={handelSave}
+                  className="bg-[#CA3160] text-lg px-7 py-5">UPDATE</Button>
+                <Button className="text-lg px-7 py-5 mx-4 uppercase ">
+                  Cancel
+                </Button>
+              </div>
+            </Drawer>
+          )
+        }
 
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Repurchase Percentage
-              </h1>
-              <Input
-                className="py-3 border border-gray-300 text-black  text-xl"
-                placeholder="Affiliate Shopping"
-              />
-            </div>
-
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Status
-              </h1>
-              {/* <Input className="py-3 border border-gray-300 text-black  text-xl" placeholder="Affiliate Shopping" /> */}
-              <Select
-                className="w-full"
-                defaultValue="lucy"
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "jack",
-                    label: "Jack",
-                  },
-                  {
-                    value: "lucy",
-                    label: <span className="py-5">Lucy</span>,
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
-                  },
-                ]}
-              />
-            </div>
-
-            <div className="my-5">
-              <h1 className="text-black text-base my-1 font-semibold">
-                Cupon Enable Status
-              </h1>
-              <Input
-                className="py-3 border border-gray-300 text-black  text-xl"
-                placeholder="Affiliate Shopping"
-              />
-            </div>
-          </div>
-          <div className="">
-            <Button className="bg-[#CA3160] text-lg px-7 py-5">UPDATE</Button>
-            <Button className="text-lg px-7 py-5 mx-4 uppercase ">
-              Cancel
-            </Button>
-          </div>
-        </Drawer>
         <h1 className="text-3xl font-bold text-[#221ECF] my-4">Services</h1>
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md ">
@@ -428,9 +315,7 @@ const MasterServices = () => {
                   <Option value="status">Status</Option>
                   {/* <option value="email">Email Id</option> */}
                 </Select>
-                {/* </Button> */}
 
-                {/* <Space direction="vertical"> */}
 
                 <Input
                   className="border-l-2 mx-2 text-black text-lg font-semibold lg:w-52 "
@@ -474,7 +359,7 @@ const MasterServices = () => {
             <Table
               className="overflow-x-scroll no-scrollbar bg-white  rounded-lg my-5"
               columns={columns}
-              dataSource={filterSelectData}
+              dataSource={displayData}
               pagination={{
                 pageSize: 10,
                 // total: TotalPages,
