@@ -1,9 +1,11 @@
 import {
   Button,
   Card,
+  Divider,
   Drawer,
   Form,
   message,
+  Modal,
   Select,
   Space,
   Table,
@@ -20,47 +22,36 @@ import DatePickerComp from "../../Component/DatePickerComp";
 import ExportPdfTable from "../../Component/ExoortPdfTable";
 import StatusCheckFilter from "../../Component/StatusCheckFilter";
 import { FaUserEdit } from "react-icons/fa";
-import UpdateUserDrawer from "../Report/UpdateUserDrawer";
+// import UpdateUserDrawer from "../Report/UpdateUserDrawer";
 import { RxCross2 } from "react-icons/rx";
+import InputSearchComp from "../../Component/InputSearchComp";
+import TableComp from "../../Component/TableComp";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import UserAddform from "./UserAddform";
+
+
+
 
 const UserList = () => {
+  const navigate = useNavigate()
   const [searched, setSearched] = useState("");
   const [selectField, setselectField] = useState("name");
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedUserUpdate] = useState("")
-
-  // console.log(holdData)
-  console.log(selectedUser, "s");
-
+  const [selectOption, setselectOption] = useState("All")
   const [users, setUsers] = useState([]);
-  console.log(users, "user");
   const [showInput, setShowInput] = useState({
     id: "",
     status: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userAdd, setuserAdd] = useState('Select')
+  console.log(userAdd, "userAdd")
   const [referId, setReferId] = useState();
-
-  const showDrawer = (user) => {
-    setSelectedUser(user);
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-    setSelectedUser(null);
-  };
-
-  const handleSave = () => {
-    const storedData = JSON.parse(localStorage.getItem("dataSource")) || [];
-
-    const updatedUsers = storedData.map((user) =>
-      user?.id === selectedUser?.id ? selectedUser : user
-    );
-
-    localStorage.setItem("dataSource", JSON.stringify(updatedUsers));
-    setUsers(updatedUsers);
-    setOpen(false);
-  };
+  // console.log(holdData)
+  // console.log(selectedUser, "s");
+  // console.log(users, "user");
 
   const columns = [
     {
@@ -196,7 +187,7 @@ const UserList = () => {
                 items: [
                   {
                     key: "edit",
-                  
+
                     label: (
                       <>
                         <spna
@@ -224,13 +215,6 @@ const UserList = () => {
               </a>
             </Dropdown>
           </Button>
-          {/* <Button
-            icon={<CopyOutlined />}
-            type="link"
-            onClick={() => {
-              message.success("Phone number copied!");
-            }}
-          /> */}
         </div>
       ),
     },
@@ -265,7 +249,6 @@ const UserList = () => {
     },
   ];
 
-  // localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
 
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
@@ -277,55 +260,45 @@ const UserList = () => {
     referedby: i.referedby,
     registration: i.registration,
     ip: i.ip,
-    address: "-",
+    address: i.address,
     status: i?.status,
     mpin: 1234,
-    balance: 100,
+    balance: i.balance,
     action: true,
   }));
 
-  const getTextContent = (element) => {
-    return element && element.props && element.props.children
-      ? element.props.children
-      : element;
+  // localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
+
+  const displayData = selectOption && selectOption !== "All" ? dataSource.filter((item) => item.status === selectOption) : dataSource;
+
+
+  const onClose = () => {
+    setOpen(false);
+    setSelectedUser(null);
   };
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSave = () => {
+    const storedData = JSON.parse(localStorage.getItem("dataSource")) || [];
+
+    const updatedUsers = storedData.map((user) =>
+      user?.id === selectedUser?.id ? selectedUser : user
+    );
+
+    localStorage.setItem("dataSource", JSON.stringify(updatedUsers));
+    // setUsers(updatedUsers);
+    setOpen(false);
+  };
+
+  // const prabhu = "Mahadev"
   const [open, setOpen] = useState(false);
-  // const [selectOption, setselectOption] = useState("All");
-
-  const doc = new jsPDF();
-  const getYearMonth = (date) => date.year() * 12 + date.month();
-
-  // const handelSelectChange = (e) => {
-  //   setselectOption(e.target.value);
-  // };
-
-  // const filterSelectData =
-  //   selectOption && selectOption !== "All"
-  //     ? dataSource.filter((item) => item.status === selectOption)
-  //     : dataSource;
-
-  const disabled7DaysDate = (current, { from, type }) => {
-    if (from) {
-      const minDate = from.add(-6, "days");
-      const maxDate = from.add(6, "days");
-
-      switch (type) {
-        case "year":
-          return (
-            current.year() < minDate.year() || current.year() > maxDate.year()
-          );
-        case "month":
-          return (
-            getYearMonth(current) < getYearMonth(minDate) ||
-            getYearMonth(current) > getYearMonth(maxDate)
-          );
-        default:
-          return Math.abs(current.diff(from, "days")) >= 7;
-      }
-    }
-    return false;
-  };
 
   const handleAddRefer = (record) => {
     if (!referId) {
@@ -340,8 +313,41 @@ const UserList = () => {
     }
   };
 
+  const handelUserAdd = (value) => {
+    // if (value.length) {
+    //   setIsModalOpen(false)
+    // }
+
+    // setuserAdd(value)
+    // console.log(userAdd)
+  }
+
   return (
     <>
+      {/* <Modal className="" width={400} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <div className="p-3">
+          <h1 className="text-2xl font-bold ">Please Select Customer Type</h1>
+          <Divider />
+          <Select
+            onChange={handelUserAdd}
+            defaultValue="Select"
+            style={{
+              width: 326,
+              height: 40,
+              fontSize: 100,
+              fontWeight: 200
+            }}
+            className="bg-gray-50 rounded-lg mx-auto "
+          >
+            <Option style={{ fontWeight: 900, fontSize: 15 }} disabled >Select</Option>
+            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Master Distributor">Master Distributor</Option>
+            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Distributor">Distributor</Option>
+            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Retailer">Retailer</Option>
+          </Select>
+        </div>
+
+      </Modal> */}
+
       <div>
         <Drawer width={520} closable={false} onClose={onClose} open={open}>
           <div className="mx-4">
@@ -361,48 +367,48 @@ const UserList = () => {
                     {/* <h1 className="text-black text-base my-1 font-semibold">
                       Edit Name
                     </h1> */}
-
+                    {/* 
                     <Form.Item
                       name="name"
                       rules={[{ required: true, message: 'this field is required!' }]}
-                    >
-                      <Input
-                        className="py-3 border border-gray-300 text-black text-xl"
-                        value={selectedUser.name}
-                        placeholder="Entre your name..."
-                        onChange={(e) =>
-                          setSelectedUser({
-                            ...selectedUser,
-                            name: e.target.value,
-                          })
-                        }
-                      />
-                    </Form.Item>
+                    > */}
+                    <Input
+                      className="py-3 border border-gray-300 text-black text-xl"
+                      value={selectedUser.name}
+                      placeholder="Entre your name..."
+                      onChange={(e) =>
+                        setSelectedUser({
+                          ...selectedUser,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                    {/* </Form.Item> */}
                   </div>
 
                   <div className="my-5">
                     {/* <h1 className="text-black text-base my-1 font-semibold">
                       Edit Email
                     </h1> */}
-                    <Form.Item
+                    {/* <Form.Item
                       name="email"
                       rules={[
                         { required: true, message: "Please input your email!" },
                         { type: "email", message: "Please enter a valid email!" },
                       ]}
-                    >
-                      <Input
-                        className="py-3 border border-gray-300 text-black text-xl"
-                        value={selectedUser.email}
-                        placeholder="Entre your email address..."
-                        onChange={(e) =>
-                          setSelectedUser({
-                            ...selectedUser,
-                            email: e.target.value,
-                          })
-                        }
-                      />
-                    </Form.Item>
+                    > */}
+                    <Input
+                      className="py-3 border border-gray-300 text-black text-xl"
+                      value={selectedUser.email}
+                      placeholder="Entre your email address..."
+                      onChange={(e) =>
+                        setSelectedUser({
+                          ...selectedUser,
+                          email: e.target.value,
+                        })
+                      }
+                    />
+                    {/* </Form.Item> */}
                   </div>
 
                   <div className="my-5">
@@ -450,7 +456,10 @@ const UserList = () => {
           </div>
         </Drawer>
 
-        <h1 className="text-3xl font-bold text-[#221ECF] my-4">User</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-[#221ECF] my-4">User</h1>
+          <Button onClick={() => navigate('/users-addform')} type="" className="py-5 lg:text-base font-bold">Add_User<IoAddCircleSharp className="text-xl" /></Button>
+        </div>
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md">
             <div className="flex flex-wrap justify-between">
@@ -469,48 +478,35 @@ const UserList = () => {
                 </Select>
                 {/* </Button> */}
 
-                <Input
-                  className="border-l-2 mx-2 text-black text-lg font-semibold lg:w-52 "
-                  bordered={false}
-                  placeholder="Search here..."
-                  allowClear
-                  onChange={(e) => {
-                    setSearched(e.target.value);
-                  }}
-                  style={{
-                    color: "black",
-                  }}
+                <InputSearchComp
+                  handelchange={(e) => setSearched(e.target.value)}
                 />
                 <FiSearch className="mx-2 lg:text-xl text-4xl  " />
               </div>
 
               <div className="flex  flex-wrap items-center gap-5">
-                <StatusCheckFilter />
+                <StatusCheckFilter
+                  value={selectOption}
+                  handelSelectChange={(value) => setselectOption(value)}
+                />
 
                 {/* DatePicKerComponent */}
+
                 <span className="">
                   <DatePickerComp />
                 </span>
 
-                {/* Filter_Drawer  ⭐*/}
-                <UpdateUserDrawer />
 
                 {/* Export TableComponent */}
                 <ExportPdfTable />
               </div>
             </div>
 
-            <Table
-              id="user-table"
-              name=""
-              className="overflow-x-scroll no-scrollbar bg-white  rounded-lg my-5"
+            {/* Component Reuse in the Component folder */}
+            <TableComp
               columns={columns}
-              dataSource={dataSource}
-              pagination={{
-                pageSize: 10,
-                // total: TotalPages,
-              }}
-            ></Table>
+              dataSource={displayData}
+            />
           </Card>
         </div>
       </div>

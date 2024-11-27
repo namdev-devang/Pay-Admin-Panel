@@ -21,15 +21,7 @@ const UpdateUserDrawer = () => {
 
   return (
     <>
-      <Button
-        // onClick={showDrawer}
-        className="py-5 bg-gray-50 px-4 border border-[#323197]"
-      >
-        <GrUpdate className="text-[#323197] text-sm" />
-        <span className="text-[#323197] text-base font-semibold">
-          Refresh all
-        </span>
-      </Button>
+      
       <Drawer width={520} closable={false} onClose={onClose} open={open}>
         <div className="mx-4">
           <div className="flex items-center justify-between my-3">

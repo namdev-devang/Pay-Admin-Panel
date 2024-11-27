@@ -15,6 +15,7 @@ import autoTable from "jspdf-autotable";
 import { data } from "autoprefixer";
 import { GrUpdate } from "react-icons/gr";
 import UpdateUserDrawer from "./UpdateUserDrawer";
+import InputSearchComp from "../../Component/InputSearchComp";
 const { RangePicker } = DatePicker;
 // Disabled 7 days from the selected date
 
@@ -170,6 +171,7 @@ const DthRecharge = () => {
 
     doc.save("Dth_Recharge_Reports");
   };
+
   return (
     <>
       <div>
@@ -304,17 +306,8 @@ const DthRecharge = () => {
                 </Select>
                 {/* <Space direction="vertical"> */}
 
-                <Input
-                  className="  text-black text-lg font-semibold w-32 md:w-52 "
-                  bordered={false}
-                  placeholder="Search user Id"
-                  onChange={(e) => setSearched(e.target.value)}
-                  allowClear
-                  //   onSearch={onSearch}
-                  style={{
-                    // width: 270,
-                    color: "black",
-                  }}
+                <InputSearchComp
+                  handelchange={(e) => setSearched(e.target.value)}
                 />
                 {/* </Space> */}
                 <FiSearch className="mx-2 text-xl" />

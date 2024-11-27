@@ -12,6 +12,9 @@ import { Option } from "antd/es/mentions";
 import { FaUserEdit } from "react-icons/fa";
 import { GrUpdate } from "react-icons/gr";
 import UpdateUserDrawer from "../Report/UpdateUserDrawer";
+import InputSearchComp from "../../Component/InputSearchComp";
+import StatusCheckFilter from "../../Component/StatusCheckFilter";
+import TableComp from "../../Component/TableComp";
 
 const MasterServices = () => {
   const [open, setOpen] = useState(false);
@@ -50,24 +53,6 @@ const MasterServices = () => {
   const handleChange = (value) => {
     // console.log(`selected ${value}`);
   };
-
-  const items = [
-    {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
-    },
-    {
-      type: "divider",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
 
   const columns = [
     {
@@ -158,12 +143,12 @@ const MasterServices = () => {
             </Dropdown>
           </Button>
           {/* <Button
-            icon={<CopyOutlined />}
-            type="link"
-            onClick={() => {
-              message.success("Phone number copied!");
-            }}
-          /> */}
+icon={<CopyOutlined />}
+type="link"
+onClick={() => {
+message.success("Phone number copied!");
+}}
+/> */}
         </div>
       ),
     },
@@ -290,7 +275,7 @@ const MasterServices = () => {
               <div className="">
                 <Button
                   onClick={handelSave}
-                  className="bg-[#CA3160] text-lg px-7 py-5">UPDATE</Button>
+                  className="bg-[#CA3160] text-lg px-7 py-5 text-white font-semibold">UPDATE</Button>
                 <Button className="text-lg px-7 py-5 mx-4 uppercase ">
                   Cancel
                 </Button>
@@ -303,12 +288,12 @@ const MasterServices = () => {
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md ">
             <div className="flex items-center flex-wrap justify-between">
+
               <div className="flex items-center bg-gray-50 border lg:py-[4px] lg:px-2 rounded-md mb-4 lg:mb-0">
                 {/* <Button className=" py-5"> */}
                 <Select
                   bordered={false}
                   defaultValue="service"
-                  onChange={(value) => setselectField(value)}
                   className=" bg-gray-50 rounded-lg focus:border-none"
                 >
                   <Option value="service">service</Option>
@@ -316,55 +301,27 @@ const MasterServices = () => {
                   {/* <option value="email">Email Id</option> */}
                 </Select>
 
-
-                <Input
-                  className="border-l-2 mx-2 text-black text-lg font-semibold lg:w-52 "
-                  bordered={false}
-                  placeholder="Search here..."
-                  allowClear
-                  onChange={(e) => {
-                    setSearched(e.target.value);
-                  }}
-                  // value={inputVal}
-                  style={{
-                    // width: 270,
-                    color: "black",
-                  }}
+                <InputSearchComp
+                  handelchange={(e) => setSearched(e.target.value)}
                 />
                 {/* </Space> */}
                 <FiSearch className="mx-2 lg:text-xl text-4xl  " />
               </div>
 
               <div className="sm:mt-0 flex items-center ">
-                <Select
-                  className="text- border font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 mx-4"
-                  defaultValue="All"
+                <StatusCheckFilter
                   value={selectOption}
-                  onChange={(value) => setselectOption(value)}
-                  placeholder="Select Status..."
-                  style={{
-                    width: 100,
-                    height: 45,
-                  }}
-                >
-                  <Option value="All">All</Option>
-                  <Option value="Active">Active</Option>
-                  <Option value="Pending">Pending</Option>
-                  <Option value="Blocked">Blocked</Option>
-                </Select>
-
+                  handelSelectChange={(value) => setselectOption(value)}
+                />
                 <UpdateUserDrawer />
               </div>
             </div>
-            <Table
-              className="overflow-x-scroll no-scrollbar bg-white  rounded-lg my-5"
+
+            {/* Component Reuse in the Component folder */}
+            <TableComp
               columns={columns}
               dataSource={displayData}
-              pagination={{
-                pageSize: 10,
-                // total: TotalPages,
-              }}
-            ></Table>
+            />
           </Card>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Form, message} from "antd";
+import { Button, Input, Form, message } from "antd";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,25 +11,20 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const dispatch = useDispatch()
-  const navigate =useNavigate()
+  const navigate = useNavigate()
 
-  // const handellogin = () => {
-
-  // }
-  // email Id features 
 
   const handleLogin = async (values) => {
-    const resultAction = await dispatch(authLogin(values)); // `values` contains `username` and `password`
+    console.log(values, "values")
+    const resultAction = await dispatch(authLogin(values));
+    console.log(resultAction, "resultAction")
     if (authLogin.fulfilled.match(resultAction)) {
       message.success('login successfully')
       navigate("/home");
-    }else{
+    } else {
       message.error("Invalid credentials")
     }
   };
-    
-  
-    
 
   // Otp Features 
   // const handlePhoneChange = (e) => {
@@ -66,193 +61,193 @@ const Login = () => {
 
   return (
     <>
-    <div className="md:block hidden bgImage  h-screen">
-      <div className="flex justify-between py-3 px-5">
-        <div className="mt-14 mx-7 ">
-          <img
-            className="w-32"
-            src="https://accounts.razorpay.com/assets/razorpay/logo-dark.svg"
-            alt="Razorpay Logo"
-          />
-        </div>
-
-            <div className="bg-white md:w-[40%]  xl:w-1/4 h-[97vh]  md:rounded-lg">
-          <div className="xl:my-36 xl:px-10 md:my-20 md:px-5">
+      <div className="md:block hidden bgImage  h-screen">
+        <div className="flex justify-between py-3 px-5">
+          <div className="mt-14 mx-7 ">
             <img
-              className=""
-              src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
-              alt="Razorpay Icon"
+              className="w-32"
+              src="https://accounts.razorpay.com/assets/razorpay/logo-dark.svg"
+              alt="Razorpay Logo"
             />
-            <h1 className="text-gray-400 md:text-[14px] my-4 font-semibold">
-              Welcome to{" "}
-              <span className="font-bold text-[15px]">Razorpay Payments</span>
-            </h1>
-            <h1 className="text-black xl:text-3xl text-xl font-semibold">
-              Get started with your email or phone number
-            </h1>
-            {/* form  */}
+          </div>
 
-    <Form
-      // name="loginForm"
-      onFinish={handleLogin}
-      autoComplete="off"
-      layout="vertical"
-    >
-      <Form.Item
-        // label="Email"
-        name="username"
+          <div className="bg-white md:w-[40%]  xl:w-1/4 h-[97vh]  md:rounded-lg">
+            <div className="xl:my-36 xl:px-10 md:my-20 md:px-5">
+              <img
+                className=""
+                src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
+                alt="Razorpay Icon"
+              />
+              <h1 className="text-gray-400 md:text-[14px] my-4 font-semibold">
+                Welcome to{" "}
+                <span className="font-bold text-[15px]">Razorpay Payments</span>
+              </h1>
+              <h1 className="text-black xl:text-3xl text-xl font-semibold">
+                Get started with your email or phone number
+              </h1>
+              {/* form  */}
 
-        rules={[
-          { required: true, message: "Please input your email!" },
-          // { type: "email", message: "Please enter a valid email!" },
-        ]}
-      >
-        <Input
-                className="mt-12  py-2 border border-gray-200 text-base"
-                placeholder="Enter username..." />
-      </Form.Item>
+              <Form
+                // name="loginForm"
+                onFinish={handleLogin}
+                autoComplete="off"
+                layout="vertical"
+              >
+                <Form.Item
+                  // label="Email"
+                  name="username"
 
-      <Form.Item  
-        // label="Password"
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input.Password
-                className=" py-2 border border-gray-200 text-base"
-                placeholder="Enter password..." />
-      </Form.Item>
+                  rules={[
+                    { required: true, message: "Please input your email!" },
+                    // { type: "email", message: "Please enter a valid email!" },
+                  ]}
+                >
+                  <Input
+                    className="mt-12  py-2 border border-gray-200 text-base"
+                    placeholder="Enter username..." />
+                </Form.Item>
 
-      <Form.Item>
-        <Button className="my-4 py-5" block type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+                <Form.Item
+                  // label="Password"
+                  name="password"
+                  rules={[{ required: true, message: "Please input your password!" }]}
+                >
+                  <Input.Password
+                    className=" py-2 border border-gray-200 text-base"
+                    placeholder="Enter password..." />
+                </Form.Item>
 
-            <h1 className="text-center border-b">or</h1>
+                <Form.Item>
+                  <Button className="my-4 py-5" block type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
 
-            <div className="flex items-center justify-between border border-gray-300 rounded-md p-2 my-4">
-              <div className="">
-                <h1 className="font-semibold text-gray-800 text-[12px]">
-                  Continue as Devang
-                </h1>
-                <h1 className="text-[11px]">devangnamdev917@gmail.com</h1>
+              <h1 className="text-center border-b">or</h1>
+
+              <div className="flex items-center justify-between border border-gray-300 rounded-md p-2 my-4">
+                <div className="">
+                  <h1 className="font-semibold text-gray-800 text-[12px]">
+                    Continue as Devang
+                  </h1>
+                  <h1 className="text-[11px]">devangnamdev917@gmail.com</h1>
+                </div>
+
+                <div>
+                  <img className="w-5" src="https://ik.imagekit.io/a069uoh9k/download.png" alt="" />
+                </div>
               </div>
 
-              <div>
-                <img className="w-5" src="https://ik.imagekit.io/a069uoh9k/download.png" alt="" />
-              </div>
+              {/* <h1 className=" text-[14px] sm:absolute bottom-[40px] font-semibold text-gray-400">
+                By continuing you agree to our{" "}
+                <span className="text-blue-500 font-semibold hover:underline">
+                  privacy policy
+                </span>{" "}
+                and
+                <span className="text-blue-500 font-semibold hover:underline">
+                  {" "}
+                  terms of use
+                </span>
+              </h1> */}
             </div>
-            
-            {/* <h1 className=" text-[14px] sm:absolute bottom-[40px] font-semibold text-gray-400">
-              By continuing you agree to our{" "}
-              <span className="text-blue-500 font-semibold hover:underline">
-                privacy policy
-              </span>{" "}
-              and
-              <span className="text-blue-500 font-semibold hover:underline">
-                {" "}
-                terms of use
-              </span>
-            </h1> */}
+          </div>
+
+
+          <div className="lg:absolute lg:block hidden bottom-24 lg:left-[68px] text-white w-[35%] md:text-4xl  font-semibold">
+            <h1>
+              Join <span className="text-[#49d08c]">8 Million</span> Businesses
+              that Trust Razorpay to Supercharge their Business
+            </h1>
+            <div className="flex gap-4 mt-6">
+              <h1 className="text-lg">100+ Payment Methods</h1>
+              <h1 className="text-lg">Easy Integration</h1>
+              <h1 className="text-lg">Powerful Dashboard</h1>
+            </div>
           </div>
         </div>
-
-
-        {/* <div className="lg:absolute bottom-24 lg:left-[68px] text-white w-[35%] md:text-4xl  font-semibold">
-          <h1>
-            Join <span className="text-[#49d08c]">8 Million</span> Businesses
-            that Trust Razorpay to Supercharge their Business
-          </h1>
-          <div className="flex gap-4 mt-6">
-            <h1 className="text-lg">100+ Payment Methods</h1>
-            <h1 className="text-lg">Easy Integration</h1>
-            <h1 className="text-lg">Powerful Dashboard</h1>
-          </div>
-        </div> */}
       </div>
-    </div>
 
- {/* 2 Position  */}
-    <div className="md:hidden block bg-white p-4 md:rounded-lg">
-          <div className="my-4 px-4">
-            <img
-              className=""
-              src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
-              alt="Razorpay Icon"
-            />
-            <h1 className="text-gray-400 md:text-[14px] my-3 font-semibold">
-              Welcome to{" "}
-              <span className="font-bold text-[15px]">Razorpay </span>
-            </h1>
-            <h1 className="text-black text-2xl font-semibold">
-              Get started with your email or phone number
-            </h1>
-            
-            <Form
-      // name="loginForm"
-      onFinish={handleLogin}
-      autoComplete="off"
-      layout="vertical"
-    >
-      <Form.Item
-        // label="Email"
-        name="username"
+      {/* 2 Position  */}
+      <div className="md:hidden block bg-white p-4 md:rounded-lg">
+        <div className="my-4 px-4">
+          <img
+            className=""
+            src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
+            alt="Razorpay Icon"
+          />
+          <h1 className="text-gray-400 md:text-[14px] my-3 font-semibold">
+            Welcome to{" "}
+            <span className="font-bold text-[15px]">Razorpay </span>
+          </h1>
+          <h1 className="text-black text-2xl font-semibold">
+            Get started with your email or phone number
+          </h1>
 
-        rules={[
-          { required: true, message: "Please input your email!" },
-        ]}
-      >
-        <Input
-        className="mt-12  py-2 text-base"
-         placeholder="Enter your email" />
-      </Form.Item>
+          <Form
+            // name="loginForm"
+            onFinish={handleLogin}
+            autoComplete="off"
+            layout="vertical"
+          >
+            <Form.Item
+              // label="Email"
+              name="username"
 
-      <Form.Item
-        // label="Password"
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input.Password
-        className="my-4 py-2 text-base"
-        placeholder="Enter your password" />
-      </Form.Item>
+              rules={[
+                { required: true, message: "Please input your email!" },
+              ]}
+            >
+              <Input
+                className="mt-12  py-2 text-base"
+                placeholder="Enter your email" />
+            </Form.Item>
 
-      <Form.Item>
-        <Button block type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+            <Form.Item
+              // label="Password"
+              name="password"
+              rules={[{ required: true, message: "Please input your password!" }]}
+            >
+              <Input.Password
+                className="my-4 py-2 text-base"
+                placeholder="Enter your password" />
+            </Form.Item>
 
-            <h1 className="text-center my-10 ">or</h1>
+            <Form.Item>
+              <Button block type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
 
-            <div className="flex items-center justify-between border border-gray-300 rounded-md p-2">
-              <div className="">
-                <h1 className="font-semibold text-gray-800 text-[12px]">
-                  Continue as Devang
-                </h1>
-                <h1 className="text-[11px]">devangnamdev917@gmail.com</h1>
-              </div>
+          <h1 className="text-center my-10 ">or</h1>
 
-              <div>
-                <img className="w-5" src="https://ik.imagekit.io/a069uoh9k/download.png" alt="" />
-              </div>
+          <div className="flex items-center justify-between border border-gray-300 rounded-md p-2">
+            <div className="">
+              <h1 className="font-semibold text-gray-800 text-[12px]">
+                Continue as Devang
+              </h1>
+              <h1 className="text-[11px]">devangnamdev917@gmail.com</h1>
             </div>
 
-            <div className="absolute bottom-0 left-auto px-4 text-[14px] my-3 font-semibold text-gray-400">
-              By continuing you agree to our{" "}
-              <span className="text-blue-700 font-semibold hover:underline">
-                privacy policy
-              </span>{" "}
-              and
-              <span className="text-blue-700 font-semibold hover:underline">
-                {" "}
-                terms of use
-              </span>
+            <div>
+              <img className="w-5" src="https://ik.imagekit.io/a069uoh9k/download.png" alt="" />
             </div>
           </div>
-    </div>
+
+          <div className="absolute bottom-0 left-auto px-4 text-[14px] my-3 font-semibold text-gray-400">
+            By continuing you agree to our{" "}
+            <span className="text-blue-700 font-semibold hover:underline">
+              privacy policy
+            </span>{" "}
+            and
+            <span className="text-blue-700 font-semibold hover:underline">
+              {" "}
+              terms of use
+            </span>
+          </div>
+        </div>
+      </div>
     </>
 
   );
@@ -279,7 +274,7 @@ export default Login;
 //   const handelChange = (e) => {
 //     setFormVal({ ...formVal, [e.target.name]: e.target.value });
 //   };
-  
+
 //   const handelLogin = (e) => {
 //     e.preventDefault();
 //     if (formVal.emaill && formVal.password) {
@@ -310,7 +305,7 @@ export default Login;
 //   };
 
 //   return (
-//     <> 
+//     <>
 //     <ToastContainer />
 //       <div className="flex h-screen absolute bg-white w-full lg:bg-gray-50 lg:gap-5 items-center">
 //         <div className="left h-full lg:w-1/3 lg:flex hidden">

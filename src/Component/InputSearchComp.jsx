@@ -3,9 +3,7 @@ import { Option } from "antd/es/mentions";
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
-const InputSearchComp = ({ value, handelchange, placeholder }) => {
-  const [searched, setSearched] = useState("");
-  const [selectField, setselectField] = useState("name");
+const InputSearchComp = ({ value, handelchange, }) => {
 
   // const columns = [
   //   {
@@ -23,19 +21,16 @@ const InputSearchComp = ({ value, handelchange, placeholder }) => {
   // ];
   return (
     <>
-      <div className="flex items-center bg-gray-50 border lg:py-[4px] lg:px-2 rounded-md mb-4 lg:mb-0">
+      <div className="">
         <Input
           className="border-l-2 mx-2 text-black text-lg font-semibold lg:w-52 "
           bordered={false}
           allowClear
           value={value}
           onChange={handelchange}
-          placeholder={placeholder}
-          style={{
-            color: "black",
-          }}
+          placeholder={`Search here...`}
         />
-        <FiSearch className="mx-2 lg:text-xl text-4xl  " />
+        {/* <FiSearch className="mx-2 lg:text-xl text-4xl  " /> */}
       </div>
     </>
   );

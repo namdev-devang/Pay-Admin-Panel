@@ -8,6 +8,7 @@ const Table_Pagination = () => {
   const [TotalPages, settotalPages] = useState(1);
   const [loading, setloading] = useState(false);
   console.log(dataScoure);
+  
   useEffect(() => {
     fetchrecords();
   }, []);

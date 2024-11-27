@@ -6,12 +6,13 @@ import Login from "../pages/Login";
 import KycRequest from "../pages/ManageUser/KycRequest";
 import NewKycRequest from "../pages/ManageUser/NewKycRequest";
 import SubCategory from "../pages/ManageUser/SubCategory";
+import UserAddform from "../pages/ManageUser/UserAddform";
 import UserList from "../pages/ManageUser/UserList";
 import WithdrawRequest from "../pages/ManageUser/WithdrawRequest";
 import AffilliateBanners from "../pages/master/AffilliateBanners";
 import Banners from "../pages/master/Banners";
 import MasterServices from "../pages/master/MasterServices";
-import Otps from "../pages/master/Otps";
+import Otps from "../pages/master/Otp's";
 import Nortification from "../pages/Nortification";
 import RefoundRequest from "../pages/RefoundRequest";
 import BBPSReports from "../pages/Report/BBPSReports";
@@ -71,6 +72,13 @@ const AllRoutes = [
     path: "/users-list",
     private: true,
     element: <UserList />,
+  },
+
+  {
+    name: "Users-Add-form",
+    path: "/users-addform",
+    private: true,
+    element: <UserAddform />,
   },
 
   {
@@ -191,7 +199,7 @@ const AllRoutes = [
     private: true,
     element: <DebitWallets />,
   },
-  
+
   {
     name: "Gift-card",
     path: "gift-card",

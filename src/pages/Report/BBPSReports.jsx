@@ -18,11 +18,12 @@ import { FiSearch } from "react-icons/fi";
 import { DatePicker } from "antd";
 import { CiExport, CiFilter } from "react-icons/ci";
 import FilterDrawer from "../ManageUser/Drawer/FilterDrawer";
-import UpdateUserDrawer from "./UpdateUserDrawer";
 import { MdContentCopy } from "react-icons/md";
 import { Option } from "antd/es/mentions";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import InputSearchComp from "../../Component/InputSearchComp";
+import StatusCheckFilter from "../../Component/StatusCheckFilter";
 const { RangePicker } = DatePicker;
 
 // Disabled 7 days from the selected date
@@ -398,44 +399,30 @@ const BBPSReports = () => {
 
                 {/* <Space direction="vertical"> */}
 
-                <Input
-                  className="border-l-2 mx-2 text-black text-lg font-semibold  md:w-52"
-                  bordered={false}
-                  placeholder="Search username"
-                  allowClear
-                  onChange={(e) => {
+                {/* Reuse_Component  */}
+                <InputSearchComp
+                  handelchange={(e) => {
                     setSearched(e.target.value);
                   }}
-                  //   onSearch={onSearch}
                 />
                 {/* </Space> */}
                 <FiSearch className="mx-2 md:text-xl text-5xl" />
               </div>
 
               <div className="flex flex-wrap items-center gap-5">
-                <Select
-                  className="text- border font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 "
+
+                <StatusCheckFilter
                   value={selectOption}
-                  defaultValue="All"
-                  onChange={(value) => setselectOption(value)}
-                  // onChange={onsorterChange}
-                  placeholder="Select Status..."
-                  style={{ width: 100, height: 45 }}
-                >
-                  <Option value="All">All</Option>
-                  <Option value="Success">Success</Option>
-                  <Option value="Pending">Pending</Option>
-                  <Option value="Cancel">Cancel</Option>
-                </Select>
+                  handelSelectChange={(value) => setselectOption(value)}
+                />
+
+
                 <Button className="bg-gray-50 py-5">
                   <RangePicker
                     bordered={false}
                     disabledDate={disabled7DaysDate}
                   />
                 </Button>
-
-                {/* Filter_Drawer  ⭐*/}
-                <UpdateUserDrawer />
 
                 <Button
                   onClick={ExportBBPSReportTable}
@@ -455,7 +442,6 @@ const BBPSReports = () => {
               dataSource={filterSelectData}
               pagination={{
                 pageSize: 10,
-                // total: TotalPages,
               }}
             ></Table>
           </Card>

@@ -22,7 +22,7 @@ import LPG_Gas from "./pages/service/BBPS/LPG_Gas";
 import AdaniElectricity from "./pages/service/BBPS/Electricity/AdaniElectricity";
 import Banners from "./pages/master/Banners";
 import AffilliateBanners from "./pages/master/AffilliateBanners";
-import Otps from "./pages/master/Otps";
+// import Otps from "./pages/master/Otps";
 import KycRequest from "./pages/ManageUser/KycRequest";
 import SubCategory from "./pages/ManageUser/SubCategory";
 import NewKycRequest from "./pages/ManageUser/NewKycRequest";
@@ -60,7 +60,7 @@ const App = () => {
         })}
 
         <Route path="/wallet/credit/" element={<CreditWallets />}>
-          {/* <Route path="credit" element={<Credit />} /> */}
+      <Route path="credit" element={<Credit />} />
           <Route path="debit" element={<DebitWallets />} />
         </Route>
 
