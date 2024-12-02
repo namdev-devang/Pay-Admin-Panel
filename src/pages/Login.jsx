@@ -227,37 +227,73 @@ const Login = () => {
 
           <Form
             // name="loginForm"
-            onFinish={handleLogin}
+            onFinish={dropdown ? handleVerifyOtp : handleSendOtp}
             autoComplete="off"
             layout="vertical"
           >
             <Form.Item
               // label="Email"
-              name="username"
+              name="phone"
 
               rules={[
-                { required: true, message: "Please input your email!" },
+                { required: true, message: 'Please input your phone!' },
+                {
+                  validator: (_, value) => {
+                    if (!value || (value.length >= 4 && value.length <= 10)) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Phone number must be between 10 characters!'));
+                  },
+                },
               ]}
+
             >
-              <Input
-                className="mt-12  py-2 text-base"
-                placeholder="Enter your email" />
+              {
+                dropdown ?
+                  <Input disabled
+                    onChange={handlePhoneChange}
+                    className="mt-12  py-2 border border-gray-200 text-base"
+                    placeholder="Enter mobile number..." />
+                  :
+                  <Input
+                    maxLength={10}
+                    onChange={handlePhoneChange}
+                    className="mt-12  py-2 border border-gray-200 text-base"
+                    placeholder="Enter mobile number..." />
+              }
+
             </Form.Item>
 
-            <Form.Item
-              // label="Password"
-              name="password"
-              rules={[{ required: true, message: "Please input your password!" }]}
-            >
-              <Input.Password
-                className="my-4 py-2 text-base"
-                placeholder="Enter your password" />
-            </Form.Item>
+            {
+              dropdown ?
+                <Form.Item
+                  // className="ml-20"
+                  // label="Password"
+                  name="otp"
+                  rules={[{ required: true }]}
+                >
+
+                  <Input
+                    maxLength={6}
+                    onChange={handleOtpChange}
+                    className=" py-2 border border-gray-200 text-base"
+                    placeholder="Enter Otp..."
+                  />
+
+                </Form.Item> : null
+            }
 
             <Form.Item>
-              <Button block type="primary" htmlType="submit">
-                Submit
-              </Button>
+              {
+                dropdown ?
+                  <Button type="primary" className="my-4 py-5 " block htmlType="submit">
+                    Submit
+                  </Button>
+
+                  : <Button className="my-4 py-5 bg-green-600 text-white text-lg font-semibold " block type="default" htmlType="submit">
+                    Otp_sent
+                  </Button>
+              }
             </Form.Item>
           </Form>
 
