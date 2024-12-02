@@ -18,6 +18,11 @@ import { DatePicker } from "antd";
 import { CiExport, CiFilter } from "react-icons/ci";
 import FilterDrawer from "../ManageUser/Drawer/FilterDrawer";
 import { MdContentCopy } from "react-icons/md";
+import { Option } from "antd/es/mentions";
+import InputSearchComp from "../../Component/InputSearchComp";
+import { GrRefresh } from "react-icons/gr";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 const { RangePicker } = DatePicker;
 
 // Disabled 7 days from the selected date
@@ -35,6 +40,42 @@ const MobileRechargeData = () => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const ExportDthReport = () => {
+    const doc = new jsPDF({
+      orientation: "landscape",
+    });
+
+    autoTable(doc, {
+      head: [
+        [
+          "SR.NO",
+          "USERNAME",
+          "OWNER_NAME",
+          "OPERATOR",
+          "NUMBER",
+          "TRANSACTION_ID",
+          "AMOUNT",
+          "STATUS",
+          "REQ_TIME",
+        ],
+      ],
+
+      body: dataSource.map((items) => [
+        items.srno,
+        items.username,
+        items.ownername,
+        items.operator,
+        items.number,
+        items.transactionid,
+        items.amount,
+        items.status,
+      ]),
+    });
+
+    doc.save("Mobile_Recharge_Reports");
+  };
+
 
   const columns = [
     {
@@ -248,6 +289,7 @@ const MobileRechargeData = () => {
                   15,45,25,899S
                 </h1>
               </Card>
+
               <Card className="md:w-72 w-full  text-base border border-gray-300 text-black font-semibold pr-2 rounded-3xl">
                 <h1 className="text-left">Today's Success Transactions</h1>
                 <h1 className="text-xl text-[#3331af] mt-[2px]">
@@ -255,6 +297,73 @@ const MobileRechargeData = () => {
                 </h1>
               </Card>
             </div>
+
+            <div className="flex flex-wrap justify-between my-5">
+              <div className="flex items-center bg-gray-50 border py-[4px] px-2 rounded-md my-2">
+                <Select
+                  bordered={false}
+                  defaultValue="userid"
+                // onChange={(value) => setSearchedSelect(value)}
+                >
+                  <Option value="userid">Username</Option>
+                  <Option value="number">Number</Option>
+                  <Option value="operator">Operator</Option>
+                </Select>
+                {/* <Space direction="vertical"> */}
+
+                <InputSearchComp
+                // handelchange={(e) => setSearched(e.target.value)}
+                />
+                {/* </Space> */}
+                <FiSearch className="mx-2 text-xl" />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-5">
+
+
+                {/* Filter_Drawer  ⭐*/}
+                {/* <FilterDrawer /> */}
+
+
+                <Button className="sm:w-auto w-full bg-blue-50 py-5 px-4 border border-blue-500">
+                  <GrRefresh className="text-blue-600 text-2xl" />
+                  <span className="text-blue-600 text-base font-semibold">
+                    Refresh
+                  </span>
+                </Button>
+
+                <Button
+                  onClick={ExportDthReport}
+                  className="bg-green-50 py-5 px-4 border border-green-500 sm:w-auto w-full"
+                >
+                  <CiExport className="text-green-600 text-2xl" />
+                  <span className="text-green-600 text-base font-semibold">
+                    Export
+                  </span>
+                </Button>
+
+
+                {/* <Button className="bg-gray-100 py-5 w-32 invisible">
+                  <Dropdown
+                    className=""
+                    menu={{
+                      items,
+                    }}
+                    trigger={["click"]}
+                  >
+                    <a onClick={(e) => e.preventDefault()}>
+                      <Space>
+                        <h1 className="mr-2 text-[#323197] font-semibold text-base">
+                          <span className="text-gray-600 text-center">Satus:</span> All
+                        </h1>
+                        <DownOutlined />
+                      </Space>
+                    </a>
+                  </Dropdown>
+                </Button> */}
+              </div>
+            </div>
+
             <Table
               className="overflow-x-scroll no-scrollbar bg-white  rounded-lg my-5 border border-gray-200"
               columns={columns}

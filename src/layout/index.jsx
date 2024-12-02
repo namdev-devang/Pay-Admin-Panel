@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 // import Header from "./Header";
 import { Layout, Menu } from "antd";
@@ -40,13 +41,14 @@ const items = [
       <HomeFilled />
     </Link>
   ),
-  getItem(
-    "Services",
-    "2",
-    <Link to="/services/mobile-recharges">
-      <HomeFilled />
-    </Link>
-  ),
+
+  // getItem(
+  //   "Services",
+  //   "2",
+  //   <Link to="/services/mobile-recharges">
+  //     <HomeFilled />
+  //   </Link>
+  // ),
 
   getItem("Master", "sub1", <BulbFilled />, [
     getItem("- Services", "3", <Link to="/master-services"></Link>),
@@ -158,7 +160,7 @@ const Index = (ChildComponent) => () => {
   const navigate = useNavigate();
   const [toggle, settoggle] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-
+  console.log(collapsed, "collapsed")
   const handleToggle = () => setCollapsed(!collapsed);
 
   const handeltoggle = () => {
@@ -170,102 +172,215 @@ const Index = (ChildComponent) => () => {
     navigate("/");
   };
   return (
-    <div className="h-screen overflow-hidden bg-[#fafcff]">
-      <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md">
-        <div className=" flex gap-2 items-center">
-          <div className="border-[#e4e4e4] sm:ml-14 flex md:gap-5 gap-4 items-center">
-            <img
-              className="md:w-28 w-[100px]"
-              src="https://upload.wikimedia.org/wikipedia/commons/7/77/Razorpay_logo.png"
-              alt=""
-            />
-            <div
-              onClick={handleToggle}
-              className=" text-xl font-semibold  text-[#19191C] cursor-pointer"
-            >
-              <GiHamburgerMenu className=" rounded-sm" />
+    <>
+      {/* Web_View_Side_Nav */}
+      <div className="h-screen overflow-hidden bg-[#fafcff] lg:block hidden ">
+        <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md">
+          <div className=" flex gap-2 items-center">
+            <div className="border-[#e4e4e4] sm:ml-14 flex md:gap-5 gap-4 items-center">
+              <img
+                className="md:w-28 w-[100px]"
+                src="https://upload.wikimedia.org/wikipedia/commons/7/77/Razorpay_logo.png"
+                alt=""
+              />
+              <div
+                onClick={handleToggle}
+                className=" text-xl font-semibold  text-[#19191C] cursor-pointer"
+              >
+                <GiHamburgerMenu className=" rounded-sm" />
+              </div>
             </div>
+          </div>
+
+          <div className="cursor-pointer items-center w gap-1 flex justify-end px-1 py-1 -[#fcffdf] rounded-md ">
+            <div className="sm:block hidden">
+              <div className="flex gap-3 mx-6 ">
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <LuSearch className=" " />
+                </span>
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <TbBellRinging className=" " />
+                </span>
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <FaRegCommentDots className=" " />
+                </span>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div>
+                <img
+                  className="md:w-10 w-7 rounded-full object-cover"
+                  src="https://e7.pngegg.com/pngimages/136/22/png-clipart-user-profile-computer-icons-girl-customer-avatar-angle-heroes-thumbnail.png "
+                  alt=""
+                  srcset=""
+                />
+              </div>
+
+              <div
+                onClick={handeltoggle}
+                className="flex items-center md:gap-6 gap-2"
+              >
+                <div>
+                  <h1 className="text-[#221ECF] font-bold md:text-base text-xs ">
+                    Super Admin
+                  </h1>
+                  <h1 className="text-sm text-gray-600 md:text-base text-xs">
+                    vipswallet@gm.com
+                  </h1>
+                </div>
+                {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </div>
+            </div>
+            {toggle ? (
+              <div className="absolute top-20 right-5 bg-white shadow-lg rounded-lg px-5 py-2 z-20">
+                <h1 className="text-center text-sky-500 font-semibold text-lg border-b ">
+                  Profile
+                </h1>
+                <h1
+                  onClick={handelLogOut}
+                  className="text-center text-red-500 font-semibold text-lg "
+                >
+                  Signout
+                </h1>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
-        <div className="cursor-pointer items-center w gap-1 flex justify-end px-1 py-1 -[#fcffdf] rounded-md ">
-          <div className="sm:block hidden">
-            <div className="flex gap-3 mx-6 ">
-              <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
-                <LuSearch className=" " />
-              </span>
-              <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
-                <TbBellRinging className=" " />
-              </span>
-              <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
-                <FaRegCommentDots className=" " />
-              </span>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <div>
-              <img
-                className="md:w-10 w-7 rounded-full object-cover"
-                src="https://e7.pngegg.com/pngimages/136/22/png-clipart-user-profile-computer-icons-girl-customer-avatar-angle-heroes-thumbnail.png "
-                alt=""
-                srcset=""
-              />
-            </div>
-
-            <div onClick={handeltoggle} className="flex items-center md:gap-6 gap-2">
-              <div>
-                <h1 className="text-[#221ECF] font-bold md:text-base text-xs ">Super Admin</h1>
-                <h1 className="text-sm text-gray-600 md:text-base text-xs">vipswallet@gm.com</h1>
-              </div>
-              {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
-            </div>
-          </div>
-          {toggle ? (
-            <div className="absolute top-20 right-5 bg-white shadow-lg rounded-lg px-5 py-2 z-20">
-              {/* <Card> */}
-              <h1 className="text-center text-sky-500 font-semibold text-lg border-b ">
-                Profile
-              </h1>
-              <h1
-                onClick={handelLogOut}
-                className="text-center text-red-500 font-semibold text-lg "
+        <div className="flex relative h-full">
+          <div id="" className="z-10 ">
+            <div className="absolute md:static transition-all duration-100 ease-linear">
+              <Sider
+                collapsed={collapsed}
+                onCollapse={handleToggle}
+                className="bg-white"
               >
-                Signout
-              </h1>
-              {/* </Card> */}
+                <Menu
+                  mode="inline"
+                  className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
+                  items={items}
+                ></Menu>
+              </Sider>
             </div>
-          ) : (
-            ""
-          )}
+          </div>
+
+          <div
+            className={` ${collapsed ? "w-full ml-20 md:ml-0 " : "w-full  ml-24 mb-20"
+              } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
+          >
+            <ChildComponent />
+          </div>
         </div>
       </div>
 
-      <div className="flex relative h-full">
-        <div id="sidebardScroll" className="z-10 ">
-          <div className="absolute md:static transition-all duration-100 ease-linear">
+      {/* Mobile_View _Side_Nav */}
+      <div className="h-screen overflow-hidden lg:hidden block">
+        <div className="flex justify-between px-4 py-4 z-0 bg-white shadow-md">
+          <div className=" flex gap-2 items-center">
+            <div className="border-[#e4e4e4] sm:ml-14 flex md:gap-5 gap-4 items-center">
+              <img
+                className="md:w-28 w-[100px]"
+                src="https://upload.wikimedia.org/wikipedia/commons/7/77/Razorpay_logo.png"
+                alt=""
+              />
+              <div
+                onClick={handleToggle}
+                className=" text-xl font-semibold  text-[#19191C] cursor-pointer"
+              >
+                <GiHamburgerMenu className=" rounded-sm" />
+              </div>
+            </div>
+          </div>
+
+          <div className="cursor-pointer items-center w gap-1 flex justify-end px-1 py-1 -[#fcffdf] rounded-md ">
+            <div className="sm:block hidden">
+              <div className="flex gap-3 mx-6 ">
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <LuSearch className=" " />
+                </span>
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <TbBellRinging className=" " />
+                </span>
+                <span className="bg-[#F8F8FC] text-[#221ECF] rounded-full text-2xl p-3">
+                  <FaRegCommentDots className=" " />
+                </span>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div>
+                <img
+                  className="md:w-10 w-7 rounded-full object-cover"
+                  src="https://e7.pngegg.com/pngimages/136/22/png-clipart-user-profile-computer-icons-girl-customer-avatar-angle-heroes-thumbnail.png "
+                  alt=""
+                  srcset=""
+                />
+              </div>
+
+              <div
+                onClick={handeltoggle}
+                className="flex items-center md:gap-6 gap-2"
+              >
+                <div>
+                  <h1 className="text-[#221ECF] font-bold md:text-base text-xs ">
+                    Super Admin
+                  </h1>
+                  <h1 className="text-sm text-gray-600 md:text-base text-xs">
+                    vipswallet@gm.com
+                  </h1>
+                </div>
+                {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </div>
+            </div>
+            {toggle ? (
+              <div className="absolute top-20 right-5 bg-white shadow-lg rounded-lg px-5 py-2 z-20">
+                <h1 className="text-center text-sky-500 font-semibold text-lg border-b ">
+                  Profile
+                </h1>
+                <h1
+                  onClick={handelLogOut}
+                  className="text-center text-red-500 font-semibold text-lg "
+                >
+                  Signout
+                </h1>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+
+        <hr />
+        <div className="flex relative h-full">
+          <div
+            id="sidebardScroll"
+            className={` absolute md:static z-10 top-0  ${collapsed ? "-left-full md:w-[10%] lg:w-[14%]  " : "left-0 w-72  md:w-0"
+              } bg-white  overflow-y-auto no-scrollbar h-screen transition-all duration-100 ease-linear`}
+          >
             <Sider
               collapsed={collapsed}
-              onCollapse={handleToggle}
-              className="bg-white"
+              // onCollapse={collapsed}
+              className="bg-white h-screen w-full"
             >
               <Menu
                 mode="inline"
                 className="bg-white h-screen outline-none  text-gray-600 w-72 p-2 mb-52 font-semibold overflow-y-scroll no-scrollbar mx-auto "
                 items={items}
-              />
+              ></Menu>
             </Sider>
           </div>
-        </div>
-
-        <div
-          className={` ${collapsed ? "w-full ml-20 md:ml-0 " : "w-full  ml-24"
-            } p-4 overflow-scroll scrollbar-webkit scrollbar-thin  h-full `}
-        >
-          <ChildComponent />
+          <div
+            className={`w-full ${collapsed ? "md:w-4/5 lg:w-full" : "w-full"
+              }  p-4 overflow-scroll scrollbar-webkit scrollbar-thin h-full`}
+          >
+            <ChildComponent />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Index;

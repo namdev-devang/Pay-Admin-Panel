@@ -12,45 +12,41 @@ const BBPS_Services = () => {
       <div className="flex ">
         <Link to={"/services/mobile-recharges/bbps-services/electricity"}>
           <Card
-            className={` mx-4  ${
-              pathname == "/services/mobile-recharges/bbps-services" ||
+            className={` mx-4  ${pathname == "/services/mobile-recharges/bbps-services" ||
               pathname ==
-                "/services/mobile-recharges/bbps-services/electricity" ||
+              "/services/mobile-recharges/bbps-services/electricity" ||
               pathname ==
-                "/services/mobile-recharges/bbps-services/electricity/adani-electricity"
-                ? "bg-[#221ecf] text-white "
-                : "bg-white text-black"
-            }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+              "/services/mobile-recharges/bbps-services/electricity/adani-electricity"
+              ? "bg-[#221ecf] text-white "
+              : "bg-white text-black"
+              }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
           >
             <h1 className="font-bold text-lg text-center">Electricity</h1>
           </Card>
         </Link>
         <Link to={"/services/mobile-recharges/bbps-services/lpg-gas"}>
           <Card
-            className={` mx-4 ${
-              pathname == "/services/mobile-recharges/bbps-services/lpg-gas"
-                ? "bg-[#221ecf] text-white "
-                : "bg-white text-black"
-            }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+            className={` mx-4 ${pathname == "/services/mobile-recharges/bbps-services/lpg-gas"
+              ? "bg-[#221ecf] text-white "
+              : "bg-white text-black"
+              }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
           >
             <h1 className="font-bold text-xl text-center">LPG Gas</h1>
           </Card>
         </Link>
         <Card
-          className={` mx-4 ${
-            pathname == "/services/mobile-recharges"
-              ? "bg-[#221ecf] text-white "
-              : "bg-white text-black"
-          }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+          className={` mx-4 ${pathname == "/services/mobile-recharges"
+            ? "bg-[#221ecf] text-white "
+            : "bg-white text-black"
+            }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
         >
           <h1 className="font-bold text-xl text-center">Water</h1>
         </Card>
         <Card
-          className={`mx-4 ${
-            pathname == "/services/mobile-recharges"
-              ? "bg-[#221ecf] text-white "
-              : "bg-white text-black"
-          }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+          className={`mx-4 ${pathname == "/services/mobile-recharges"
+            ? "bg-[#221ecf] text-white "
+            : "bg-white text-black"
+            }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
         >
           <h1 className="font-bold text-xl textce">Landline</h1>
         </Card>

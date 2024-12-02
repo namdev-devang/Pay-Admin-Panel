@@ -8,56 +8,62 @@ import { authLogin } from "../redux/actions/authAction";
 const Login = () => {
   const [dropdown, setDropdown] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  console.log(phoneNumber, "phoneNumber")
   const [otp, setOtp] = useState("");
+  console.log(otp, "otp")
   const [otpSent, setOtpSent] = useState(false);
+  console.log(otpSent, "otpSent")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
 
   const handleLogin = async (values) => {
     console.log(values, "values")
-    const resultAction = await dispatch(authLogin(values));
-    console.log(resultAction, "resultAction")
-    if (authLogin.fulfilled.match(resultAction)) {
-      message.success('login successfully')
-      navigate("/home");
-    } else {
-      message.error("Invalid credentials")
-    }
+
   };
 
   // Otp Features 
-  // const handlePhoneChange = (e) => {
-  //   setPhoneNumber(e.target.value);
-  // };
+  const handlePhoneChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
 
-  // const handleOtpChange = (e) => {
-  //   setOtp(e.target.value);
-  // };
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
 
-  // const validatePhoneNumber = () => {
-  //   const phonePattern = /^[0-9]{10}$/;
-  //   return phonePattern.test(phoneNumber);
-  // };
+  const validatePhoneNumber = () => {
+    const phonePattern = /^[0-9]{10}$/;
+    return phonePattern.test(phoneNumber);
+  };
 
-  // const handleSendOtp = () => {
-  //   if (!validatePhoneNumber()) {
-  //     message.error("Please enter a valid 10-digit phone number.");
-  //     return;
-  //   }
+  const handleSendOtp = async (values) => {
+    const resultAction = await dispatch(authLogin(values));
+    console.log(resultAction, "resultAction")
+    if (authLogin.fulfilled.match(resultAction)) {
+      message.success("OTP sent successfully!");
+      setDropdown(true);
+      setOtpSent(true);
+    } else {
+      message.error("Invalid credentials")
+    }
+    if (!validatePhoneNumber()) {
+      message.error("Please enter a valid 10-digit phone number.");
+      return;
+    }
 
-  //   message.success("OTP sent successfully!");
-  //   setDropdown(true);
-  //   setOtpSent(true);
-  // };
 
-  // const handleVerifyOtp = () => {
-  //   if (!otp) {
-  //     message.error("Please enter the OTP.");
-  //   } else {
-  //     message.success("OTP verified successfully!");
-  //   }
-  // };
+  };
+
+  const handleVerifyOtp = (val) => {
+    console.log(val)
+    if (!otp) {
+      message.error("Please enter the OTP.");
+    } else {
+      message.success("OTP verified successfully!");
+      message.success('login successfully')
+      navigate("/home");
+    }
+  };
 
   return (
     <>
@@ -89,38 +95,73 @@ const Login = () => {
 
               <Form
                 // name="loginForm"
-                onFinish={handleLogin}
+                onFinish={dropdown ? handleVerifyOtp : handleSendOtp}
                 autoComplete="off"
                 layout="vertical"
               >
                 <Form.Item
                   // label="Email"
-                  name="username"
+                  name="phone"
 
                   rules={[
-                    { required: true, message: "Please input your email!" },
-                    // { type: "email", message: "Please enter a valid email!" },
+                    { required: true, message: 'Please input your phone!' },
+                    {
+                      validator: (_, value) => {
+                        if (!value || (value.length >= 4 && value.length <= 10)) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('Phone number must be between 10 characters!'));
+                      },
+                    },
                   ]}
+
                 >
-                  <Input
-                    className="mt-12  py-2 border border-gray-200 text-base"
-                    placeholder="Enter username..." />
+                  {
+                    dropdown ?
+                      <Input disabled
+                        onChange={handlePhoneChange}
+                        className="mt-12  py-2 border border-gray-200 text-base"
+                        placeholder="Enter mobile number..." />
+                      :
+                      <Input
+                        maxLength={10}
+                        onChange={handlePhoneChange}
+                        className="mt-12  py-2 border border-gray-200 text-base"
+                        placeholder="Enter mobile number..." />
+                  }
+
                 </Form.Item>
 
-                <Form.Item
-                  // label="Password"
-                  name="password"
-                  rules={[{ required: true, message: "Please input your password!" }]}
-                >
-                  <Input.Password
-                    className=" py-2 border border-gray-200 text-base"
-                    placeholder="Enter password..." />
-                </Form.Item>
+                {
+                  dropdown ?
+                    <Form.Item
+                      // className="ml-20"
+                      // label="Password"
+                      name="otp"
+                      rules={[{ required: true }]}
+                    >
+
+                      <Input
+                        maxLength={6}
+                        onChange={handleOtpChange}
+                        className=" py-2 border border-gray-200 text-base"
+                        placeholder="Enter Otp..."
+                      />
+
+                    </Form.Item> : null
+                }
 
                 <Form.Item>
-                  <Button className="my-4 py-5" block type="primary" htmlType="submit">
-                    Submit
-                  </Button>
+                  {
+                    dropdown ?
+                      <Button type="primary" className="my-4 py-5 " block htmlType="submit">
+                        Submit
+                      </Button>
+
+                      : <Button className="my-4 py-5 bg-green-600 text-white text-lg font-semibold " block type="default" htmlType="submit">
+                        Otp_sent
+                      </Button>
+                  }
                 </Form.Item>
               </Form>
 

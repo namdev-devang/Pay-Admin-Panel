@@ -12,7 +12,7 @@ const StatusCheckFilter = (props) => {
           height: 45,
         }}
         defaultValue="All"
-        className="text- border mx-4  font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 "
+        className="w-1/2 border mx-4  font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 "
         placeholder="Search Status..."
         value={value}
         onChange={handelSelectChange}

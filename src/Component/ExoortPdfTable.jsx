@@ -60,7 +60,7 @@ const ExoortPdfTable = () => {
     <>
       <Button
         onClick={ExportPdf}
-        className="bg-green-50 py-5 px-4 border border-green-500"
+        className="bg-green-50 py-5 px-4 border border-green-500  "
       >
         <CiExport className="text-green-600 text-2xl" />
         <span className="text-green-600 text-base font-semibold">Export</span>

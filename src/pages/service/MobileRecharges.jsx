@@ -15,11 +15,10 @@ const MobileRecharges = () => {
           <Link to="/services/mobile-recharges">
             <Card
               // activeTabKey="home"
-              className={` ${
-                pathname == "/services/mobile-recharges"
-                  ? "bg-[#221ecf] text-white "
-                  : "bg-white text-black"
-              }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+              className={` ${pathname == "/services/mobile-recharges"
+                ? "bg-[#221ecf] text-white "
+                : "bg-white text-black"
+                }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
               style={{
                 width: 300,
               }}
@@ -37,15 +36,14 @@ const MobileRecharges = () => {
           <Link to="/services/mobile-recharges/bbps-services">
             <Card
               // activeTabKey="home"
-              className={` ${
-                pathname == "/services/mobile-recharges/bbps-services" ||
+              className={` ${pathname == "/services/mobile-recharges/bbps-services" ||
                 pathname ==
-                  "/services/mobile-recharges/bbps-services/electricity" ||
+                "/services/mobile-recharges/bbps-services/electricity" ||
                 pathname == "/services/mobile-recharges/bbps-services/lpg-gas"
-                  ? // pathname == "/services/Mobile-Recharges/BBPS-Services/electricity/adani-electricity"
-                    "bg-[#221ecf] text-white "
-                  : "bg-white text-black"
-              }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
+                ? // pathname == "/services/Mobile-Recharges/BBPS-Services/electricity/adani-electricity"
+                "bg-[#221ecf] text-white "
+                : "bg-white text-black"
+                }  border border-gray-200 font-semibold my-4 rounded-2xl shadow-xl`}
               style={{
                 width: 300,
               }}

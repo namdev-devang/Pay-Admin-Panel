@@ -24,6 +24,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import InputSearchComp from "../../Component/InputSearchComp";
 import StatusCheckFilter from "../../Component/StatusCheckFilter";
+import { GrRefresh } from "react-icons/gr";
 const { RangePicker } = DatePicker;
 
 // Disabled 7 days from the selected date
@@ -410,11 +411,12 @@ const BBPSReports = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-5">
-
-                <StatusCheckFilter
-                  value={selectOption}
-                  handelSelectChange={(value) => setselectOption(value)}
-                />
+                <div className="sm:block hidden">
+                  <StatusCheckFilter
+                    value={selectOption}
+                    handelSelectChange={(value) => setselectOption(value)}
+                  />
+                </div>
 
 
                 <Button className="bg-gray-50 py-5">
@@ -424,15 +426,44 @@ const BBPSReports = () => {
                   />
                 </Button>
 
-                <Button
-                  onClick={ExportBBPSReportTable}
-                  className="bg-green-50 py-5 px-4 border border-green-500"
-                >
-                  <CiExport className="text-green-600 text-2xl" />
-                  <span className="text-green-600 text-base font-semibold">
-                    Export
+                <div className="sm:block hidden">
+                  <Button
+                    onClick={ExportBBPSReportTable}
+                    className="bg-green-50 py-5 px-4 border border-green-500"
+                  >
+                    <CiExport className="text-green-600 text-2xl" />
+                    <span className="text-green-600 text-base font-semibold">
+                      Export
+                    </span>
+                  </Button>
+                </div>
+
+                <Button className="sm:w-auto w-full bg-blue-50 py-5 px-4 border border-blue-500">
+                  <GrRefresh className="text-blue-600 text-2xl" />
+                  <span className="text-blue-600 text-base font-semibold">
+                    Refresh
                   </span>
                 </Button>
+
+                <div className="sm:hidden block">
+                  <div className="flex justify-between">
+                    <StatusCheckFilter
+                      value={selectOption}
+                      handelSelectChange={(value) => setselectOption(value)}
+                    />
+                    {/* Export TableComponent */}
+                    <Button
+                      onClick={ExportBBPSReportTable}
+                      className="bg-green-50 py-5 px-4 border border-green-500"
+                    >
+                      <CiExport className="text-green-600 text-2xl" />
+                      <span className="text-green-600 text-base font-semibold">
+                        Export
+                      </span>
+                    </Button>
+
+                  </div>
+                </div>
               </div>
             </div>
             <Table

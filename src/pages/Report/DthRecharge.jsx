@@ -13,13 +13,17 @@ import { Option } from "antd/es/mentions";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { data } from "autoprefixer";
-import { GrUpdate } from "react-icons/gr";
+import { GrRefresh, GrUpdate } from "react-icons/gr";
 import UpdateUserDrawer from "./UpdateUserDrawer";
 import InputSearchComp from "../../Component/InputSearchComp";
+import { useLocation } from "react-router-dom";
 const { RangePicker } = DatePicker;
 // Disabled 7 days from the selected date
 
 const DthRecharge = () => {
+  const location = useLocation()
+  const { pathname } = location
+  console.log(pathname, "pathname")
   const [open, setOpen] = useState(false);
   const [searched, setSearched] = useState("");
   const [searchedSelect, setSearchedSelect] = useState("userid");
@@ -274,18 +278,18 @@ const DthRecharge = () => {
           </div>
         </Drawer>
         <h1 className="text-3xl font-bold text-[#221ECF] my-4">
-          Services Reports
+          DTH Services Reports 
         </h1>
         <div className="my-5">
           <Card className="rounded-xl border border-gray-300 mb-14 shadow-md ">
             <div className="flex flex-wrap gap-5">
-              <Card className="text-base border border-gray-300 text-black font-semibold pr-5 rounded-3xl">
+              <Card className="text-base border border-gray-300 text-black font-semibold sm:w-auto w-full rounded-3xl">
                 <h1 className="text-left">Today's Total Amount</h1>
                 <h1 className="text-xl text-[#3331af] mt-[2px]">
                   15,45,25,899S
                 </h1>
               </Card>
-              <Card className="text-base border border-gray-300 text-black font-semibold pr-2 rounded-3xl">
+              <Card className="text-base border border-gray-300 text-black sm:w-auto w-full font-semibold pr-2 rounded-3xl">
                 <h1 className="text-left">Today's Success Transactions</h1>
                 <h1 className="text-xl text-[#3331af] mt-[2px]">
                   15,45,25,899S
@@ -294,7 +298,7 @@ const DthRecharge = () => {
             </div>
 
             <div className="flex flex-wrap justify-between my-5">
-              <div className="flex items-center bg-gray-50 border py-[4px] px-2 rounded-md">
+              <div className="flex items-center bg-gray-50 border py-[4px] px-2 rounded-md my-2">
                 <Select
                   bordered={false}
                   defaultValue="userid"
@@ -326,15 +330,23 @@ const DthRecharge = () => {
 
                 <UpdateUserDrawer />
 
+                <Button className="sm:w-auto w-full bg-blue-50 py-5 px-4 border border-blue-500">
+                  <GrRefresh className="text-blue-600 text-2xl" />
+                  <span className="text-blue-600 text-base font-semibold">
+                    Refresh
+                  </span>
+                </Button>
+
                 <Button
                   onClick={ExportDthReport}
-                  className="bg-green-50 py-5 px-4 border border-green-500"
+                  className="bg-green-50 py-5 px-4 border border-green-500 sm:w-auto w-full"
                 >
                   <CiExport className="text-green-600 text-2xl" />
                   <span className="text-green-600 text-base font-semibold">
                     Export
                   </span>
                 </Button>
+
 
                 {/* <Button className="bg-gray-100 py-5 w-32 invisible">
                   <Dropdown

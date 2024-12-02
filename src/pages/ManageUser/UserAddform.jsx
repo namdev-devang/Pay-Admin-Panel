@@ -2,8 +2,7 @@ import { Button, Card, Form, Input, message } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UserAddform = ({ userAdd }) => {
-    console.log(userAdd)
+const UserAddform = () => {
     const navigate = useNavigate()
     const [form] = Form.useForm();
 
