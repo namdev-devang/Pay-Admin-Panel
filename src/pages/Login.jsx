@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import { Button, Input, Form, message } from "antd";
-import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authLogin } from "../redux/actions/authAction";
+import { authLogin } from "../redux/actions/auth/authAction";
+import ToastComp from "../Component/ToastComp";
 
 const Login = () => {
-  const [dropdown, setDropdown] = useState(false);
+  const [OTP_SHOW, setOTP_SHOW] = useState(false);
+  const [formVal, setFormVal] = useState({
+    phone: "",
+    email: ''
+  })
   const [phoneNumber, setPhoneNumber] = useState("");
   console.log(phoneNumber, "phoneNumber")
   const [otp, setOtp] = useState("");
   console.log(otp, "otp")
-  const [otpSent, setOtpSent] = useState(false);
-  console.log(otpSent, "otpSent")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-
-  const handleLogin = async (values) => {
-    console.log(values, "values")
-
-  };
 
   // Otp Features 
   const handlePhoneChange = (e) => {
@@ -31,43 +28,53 @@ const Login = () => {
     setOtp(e.target.value);
   };
 
-  const validatePhoneNumber = () => {
-    const phonePattern = /^[0-9]{10}$/;
-    return phonePattern.test(phoneNumber);
-  };
+  // const validatePhoneNumber = () => {
+  //   const phonePattern = /^[0-9]{10}$/;
+  //   return phonePattern.test(formVal.phone);
+  // };
 
   const handleSendOtp = async (values) => {
+    console.log(values, "values")
     const resultAction = await dispatch(authLogin(values));
-    console.log(resultAction, "resultAction")
-    if (authLogin.fulfilled.match(resultAction)) {
-      message.success("OTP sent successfully!");
-      setDropdown(true);
-      setOtpSent(true);
+    console.log(resultAction.payload.ResponseStatus, "resultAction")
+    if (resultAction.payload.ResponseStatus === 3) {
+      message.success(resultAction.payload.Remarks)
+      setOTP_SHOW(true);
     } else {
-      message.error("Invalid credentials")
-    }
-    if (!validatePhoneNumber()) {
-      message.error("Please enter a valid 10-digit phone number.");
-      return;
+      message.error(resultAction.payload.Remarks)
     }
 
+    // if (!validatePhoneNumber()) {
+    //   message.error("Please enter a valid 10-digit phone number.");
+    //   return;
+    // }
+
+    // if (values.phone === "8269710784") {
+    //   message.success("otp sent sms Through")
+    //   setOTP_SHOW(true);
+    // } else {
+    //   message.error('Invalid credentials')
+    // }
 
   };
 
-  const handleVerifyOtp = (val) => {
+  const handleVerifyOtp = async (val) => {
     console.log(val)
-    if (!otp) {
-      message.error("Please enter the OTP.");
-    } else {
+    const resultAction = await dispatch(authLogin(val));
+    console.log(resultAction.payload.ResponseStatus, "resultAction")
+    if (resultAction.payload.ResponseStatus === 2) {
       message.success("OTP verified successfully!");
-      message.success('login successfully')
+      message.success(resultAction.payload.Remarks)
+      localStorage.setItem("token", resultAction.payload.AccessToken)
       navigate("/home");
+    } else {
+      message.error(resultAction.payload.Remarks)
     }
   };
 
   return (
     <>
-      <div className="md:block hidden bgImage  h-screen">
+      <div className="md:block hidden bg-[url('https://media.razorpay.com/file/platform/frontend-auth/razorpay/razorpay-bg-visual-1.3x.jpeg')] bg-no-repeat bg-cover  h-screen">
         <div className="flex justify-between py-3 px-5">
           <div className="mt-14 mx-7 ">
             <img
@@ -85,7 +92,7 @@ const Login = () => {
                 alt="Razorpay Icon"
               />
               <h1 className="text-gray-400 md:text-[14px] my-4 font-semibold">
-                Welcome to{" "}
+                Welcome to {" "}
                 <span className="font-bold text-[15px]">Razorpay Payments</span>
               </h1>
               <h1 className="text-black xl:text-3xl text-xl font-semibold">
@@ -95,7 +102,7 @@ const Login = () => {
 
               <Form
                 // name="loginForm"
-                onFinish={dropdown ? handleVerifyOtp : handleSendOtp}
+                onFinish={OTP_SHOW ? handleVerifyOtp : handleSendOtp}
                 autoComplete="off"
                 layout="vertical"
               >
@@ -114,29 +121,19 @@ const Login = () => {
                       },
                     },
                   ]}
-
                 >
                   {
-                    dropdown ?
-                      <Input disabled
-                        onChange={handlePhoneChange}
-                        className="mt-12  py-2 border border-gray-200 text-base"
-                        placeholder="Enter mobile number..." />
-                      :
-                      <Input
-                        maxLength={10}
-                        onChange={handlePhoneChange}
-                        className="mt-12  py-2 border border-gray-200 text-base"
-                        placeholder="Enter mobile number..." />
+                    <Input maxLength={10} disabled={OTP_SHOW ? true : false}
+                      onChange={handlePhoneChange}
+                      className="mt-12  py-2 border border-gray-200 text-base"
+                      placeholder="Enter mobile number..." />
                   }
 
                 </Form.Item>
 
                 {
-                  dropdown ?
+                  OTP_SHOW ?
                     <Form.Item
-                      // className="ml-20"
-                      // label="Password"
                       name="otp"
                       rules={[{ required: true }]}
                     >
@@ -147,20 +144,15 @@ const Login = () => {
                         className=" py-2 border border-gray-200 text-base"
                         placeholder="Enter Otp..."
                       />
-
                     </Form.Item> : null
                 }
 
                 <Form.Item>
                   {
-                    dropdown ?
-                      <Button type="primary" className="my-4 py-5 " block htmlType="submit">
-                        Submit
-                      </Button>
-
-                      : <Button className="my-4 py-5 bg-green-600 text-white text-lg font-semibold " block type="default" htmlType="submit">
-                        Otp_sent
-                      </Button>
+                    <Button type="primary" className={`${OTP_SHOW ? "my-4 py-5" : "my-4 py-5 bg-green-600 text-white text-lg font-semibold"}`}
+                      block htmlType="submit">
+                      {OTP_SHOW ? "Submit" : "OTP_Sent"}
+                    </Button>
                   }
                 </Form.Item>
               </Form>
@@ -194,7 +186,6 @@ const Login = () => {
             </div>
           </div>
 
-
           <div className="lg:absolute lg:block hidden bottom-24 lg:left-[68px] text-white w-[35%] md:text-4xl  font-semibold">
             <h1>
               Join <span className="text-[#49d08c]">8 Million</span> Businesses
@@ -214,7 +205,7 @@ const Login = () => {
         <div className="my-4 px-4">
           <img
             className=""
-            src="https://accounts.razorpay.com/assets/common/logo-icon.svg"
+            src="https://accounts.razorpay.com/asEsets/common/logo-icon.svg"
             alt="Razorpay Icon"
           />
           <h1 className="text-gray-400 md:text-[14px] my-3 font-semibold">
@@ -227,7 +218,7 @@ const Login = () => {
 
           <Form
             // name="loginForm"
-            onFinish={dropdown ? handleVerifyOtp : handleSendOtp}
+            onFinish={OTP_SHOW ? handleVerifyOtp : handleSendOtp}
             autoComplete="off"
             layout="vertical"
           >
@@ -249,7 +240,7 @@ const Login = () => {
 
             >
               {
-                dropdown ?
+                OTP_SHOW ?
                   <Input disabled
                     onChange={handlePhoneChange}
                     className="mt-12  py-2 border border-gray-200 text-base"
@@ -265,7 +256,7 @@ const Login = () => {
             </Form.Item>
 
             {
-              dropdown ?
+              OTP_SHOW ?
                 <Form.Item
                   // className="ml-20"
                   // label="Password"
@@ -285,7 +276,7 @@ const Login = () => {
 
             <Form.Item>
               {
-                dropdown ?
+                OTP_SHOW ?
                   <Button type="primary" className="my-4 py-5 " block htmlType="submit">
                     Submit
                   </Button>
@@ -312,7 +303,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="absolute bottom-0 left-auto px-4 text-[14px] my-3 font-semibold text-gray-400">
+          <div className="absolute bottom-0 left-auto px- text-[13px] my-3 font-semibold text-gray-400">
             By continuing you agree to our{" "}
             <span className="text-blue-700 font-semibold hover:underline">
               privacy policy
@@ -332,153 +323,3 @@ const Login = () => {
 
 export default Login;
 
-
-// import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import { TfiEmail, TfiLock } from "react-icons/tfi";
-// import {ToastContainer,toast} from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css';
-
-// const Login = () => {
-//   const navigate = useNavigate();
-//   const [email, setEmail] = useState("");
-//   const [isValid, setIsValid] = useState(true);
-//   const [formVal, setFormVal] = useState({
-//     emaill: "",
-//     password: "",
-//   });
-
-//   const handelChange = (e) => {
-//     setFormVal({ ...formVal, [e.target.name]: e.target.value });
-//   };
-
-//   const handelLogin = (e) => {
-//     e.preventDefault();
-//     if (formVal.emaill && formVal.password) {
-//       if (
-//         formVal.emaill === "admin@gmail.com" &&
-//         formVal.password === "12345"
-//       ) {
-//         localStorage.setItem("token", "Token");
-//         navigate("/home");
-//       } else {
-//         toast("Wrong User Validate");
-//       }
-//     } else {
-//       document.getElementById("emaill").style.border = "1px solid red";
-//       document.getElementById("password").style.border = "1px solid red";
-//     }
-//   };
-
-//   const handleEmailChange = (e) => {
-//     const inputEmail = e.target.value;
-//     setEmail(inputEmail);
-
-//     // Regular expression for basic email validation
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     const isValidEmail = emailRegex.test(inputEmail);
-
-//     setIsValid(isValidEmail);
-//   };
-
-//   return (
-//     <>
-//     <ToastContainer />
-//       <div className="flex h-screen absolute bg-white w-full lg:bg-gray-50 lg:gap-5 items-center">
-//         <div className="left h-full lg:w-1/3 lg:flex hidden">
-//           <figure className="">
-//             <img
-//               src="https://ik.imagekit.io/a069uoh9k/login-bg.jpg"
-//               className="h-full"
-//               alt=""
-//             />
-//           </figure>
-//         </div>
-//         <section className="lg:w-2/3 w-full lg: sm:w-4/5 md:w-3/4 mx-auto lg:px-20">
-//           <div className="mb-5">
-//             <span className="flex text-center text-blue-500 text-3xl font-bold gap-2">
-//               <img
-//                 src="https://ik.imagekit.io/a069uoh9k/favicon.png"
-//                 className="w-8 2xl:"
-//                 alt=""
-//               />{" "}
-//               Sociala.
-//             </span>
-//           </div>
-
-//           <div className="right flex flex-col mx-auto lg:p-10 p-5 bg-white rounded lg:shadow">
-//             <h1 className="text-xl mb-5 uppercase font-bold gap-10">
-//               LOGIN TO YOUR ACCOUNT
-//             </h1>
-
-//             <form onSubmit={handelLogin}>
-//               <div
-//                 id="emaill"
-//                 className=" mb-4 border rounded flex items-center gap-3 w-full "
-//               >
-//                 <label>
-//                   {" "}
-//                   <TfiEmail className="text-gray-500 text-xl mx-2" />
-//                 </label>
-//                 <input
-//                   type="email"
-//                   name="emaill"
-//                   className="p-1 outline-none rounded flex items-center  w-full "
-//                   placeholder="Email"
-//                   value={formVal?.emaill}
-//                   onChange={handelChange || handleEmailChange}
-//                   // required
-//                 />
-//               </div>
-
-//               {!isValid && (
-//                 <p className="text-red-300 mb-2">Invalid email address</p>
-//               )}
-
-//               <div
-//                 id="password"
-//                 className=" mb-4 border rounded flex items-center gap-3 w-full "
-//               >
-//                 <label>
-//                   {" "}
-//                   <TfiLock className="text-gray-500 text-xl mx-2" />
-//                 </label>
-//                 <input
-//                   name="password"
-//                   value={formVal?.password}
-//                   onChange={handelChange}
-//                   type="password"
-//                   className="p-1 outline-none rounded flex items-center  w-full "
-//                   placeholder="Password"
-//                 />
-//               </div>
-
-//               <span className="px-3 mb-5 flex justify-end items-center gap-3 font-medium cursor-pointer hover:underline">
-//                 Forgot Your Password ?
-//               </span>
-//               <div className="mb-5 border hover:bg-transparent hover:text-blue-500 bg-blue-500 text-white cursor-pointer border-blue-500 text-center rounded flex items-center gap-3">
-//                 <input
-//                   type="submit"
-//                   className="w-full p-2 uppercase cursor-pointer text-center"
-//                   value="LOGIN"
-//                 />
-//               </div>
-//             </form>
-
-//             <div className="flex items-center gap-1.5">
-//               <span className="text-gray-500">Don't have an account? </span>
-
-//               <Link to="/register">
-//                 <span className="text-blue-500 font-bold cursor-pointer hover:underline ">
-//                   REGISTER
-//                 </span>
-//               </Link>
-//             </div>
-//           </div>
-//         </section>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Login;

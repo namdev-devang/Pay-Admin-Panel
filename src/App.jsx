@@ -22,7 +22,7 @@ import LPG_Gas from "./pages/service/BBPS/LPG_Gas";
 import AdaniElectricity from "./pages/service/BBPS/Electricity/AdaniElectricity";
 import Banners from "./pages/master/Banners";
 import AffilliateBanners from "./pages/master/AffilliateBanners";
-// import Otps from "./pages/master/Otps";
+// import Otps from "./pages/master/Otp";
 import KycRequest from "./pages/ManageUser/KycRequest";
 import SubCategory from "./pages/ManageUser/SubCategory";
 import NewKycRequest from "./pages/ManageUser/NewKycRequest";
@@ -38,10 +38,13 @@ import Login from "./pages/Login";
 import AllRoutes from "./routes/AllRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
+import { message } from "antd";
 
 const App = () => {
+  const [contextHolder] = message.useMessage();
   return (
     <>
+      
       <Routes>
         {AllRoutes.map((item) => {
           return (
@@ -60,7 +63,7 @@ const App = () => {
         })}
 
         <Route path="/wallet/credit/" element={<CreditWallets />}>
-      <Route path="credit" element={<Credit />} />
+          <Route path="credit" element={<Credit />} />
           <Route path="debit" element={<DebitWallets />} />
         </Route>
 
@@ -78,7 +81,7 @@ const App = () => {
           </Route>
           <Route path="operator" element={<OperatorMain />}></Route>
         </Route>
-        
+
       </Routes>
     </>
   );

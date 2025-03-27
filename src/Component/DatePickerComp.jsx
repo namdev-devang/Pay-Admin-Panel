@@ -23,10 +23,10 @@ const disabled7DaysDate = (current, { from, type }) => {
   }
   return false;
 };
-const App = () => (
+const DatePickerComp = () => (
   <Space direction="vertical">
     {/* <Typography.Title level={5}>6 months range</Typography.Title> */}
     <RangePicker disabledDate={disabled7DaysDate}  className="p-2" />
   </Space>
 );
-export default App;
+export default DatePickerComp;

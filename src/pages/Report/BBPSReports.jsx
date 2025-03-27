@@ -25,6 +25,11 @@ import autoTable from "jspdf-autotable";
 import InputSearchComp from "../../Component/InputSearchComp";
 import StatusCheckFilter from "../../Component/StatusCheckFilter";
 import { GrRefresh } from "react-icons/gr";
+import Heading from "../../Component/Heading";
+import RefreshBtn from "../../Component/RefreshBtn";
+import DatePickerComp from "../../Component/DatePickerComp";
+import ExportPdfBtn from "../../Component/ExportPdfBtn";
+import TableComp from "../../Component/TableComp";
 const { RangePicker } = DatePicker;
 
 // Disabled 7 days from the selected date
@@ -35,75 +40,8 @@ const BBPSReports = () => {
   const [selectSearch, setselectSearch] = useState("username");
   const [selectOption, setselectOption] = useState("All");
   console.log(selectSearch, "ssss");
-  const handelSelectChange = (e) => {
-    setselectOption(e.target.value);
-  };
 
-  const getYearMonth = (date) => date.year() * 12 + date.month();
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
-  const hasSelected = selectedRowKeys.length > 0;
-
-  const disabled7DaysDate = (current, { from, type }) => {
-    if (from) {
-      const minDate = from.add(-6, "days");
-      const maxDate = from.add(6, "days");
-      switch (type) {
-        case "year":
-          return (
-            current.year() < minDate.year() || current.year() > maxDate.year()
-          );
-        case "month":
-          return (
-            getYearMonth(current) < getYearMonth(minDate) ||
-            getYearMonth(current) > getYearMonth(maxDate)
-          );
-        default:
-          return Math.abs(current.diff(from, "days")) >= 7;
-      }
-    }
-    return false;
-  };
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-
-  const items = [
-    {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
-    },
-    {
-      type: "divider",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
 
   const columns = [
     {
@@ -280,113 +218,12 @@ const BBPSReports = () => {
   return (
     <>
       <div>
-        <Drawer width={420} closable={false} onClose={onClose} open={open}>
-          <div>
-            <div className="flex items-center justify-between my-3">
-              <h1 className="text-2xl font-bold text-[#5a58eb]">
-                Edit Services
-              </h1>
-              <RxCross1 onClick={onClose} className="cursor-pointer text-xl" />
-            </div>
-            <div className="mt-10">
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Service
-                </h1>
-                <Input
-                  className="py-3 border border-gray-300 text-black  text-xl"
-                  placeholder="Affiliate Shopping"
-                />
-              </div>
+        <Heading title={"UpDate Recharge / BBPS Transactions"} />
 
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Shopping Percentage
-                </h1>
-                <Input
-                  className="py-3 border border-gray-300 text-black  text-xl"
-                  placeholder="Affiliate Shopping"
-                />
-              </div>
-
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Prime Percentage
-                </h1>
-                <Input
-                  className="py-3 border border-gray-300 text-black  text-xl"
-                  placeholder="Affiliate Shopping"
-                />
-              </div>
-
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Repurchase Percentage
-                </h1>
-                <Input
-                  className="py-3 border border-gray-300 text-black  text-xl"
-                  placeholder="Affiliate Shopping"
-                />
-              </div>
-
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Status
-                </h1>
-                {/* <Input className="py-3 border border-gray-300 text-black  text-xl" placeholder="Affiliate Shopping" /> */}
-                <Select
-                  className="w-full"
-                  defaultValue="lucy"
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "jack",
-                      label: "Jack",
-                    },
-                    {
-                      value: "lucy",
-                      label: <span className="py-5">Lucy</span>,
-                    },
-                    {
-                      value: "Yiminghe",
-                      label: "yiminghe",
-                    },
-                    {
-                      value: "disabled",
-                      label: "Disabled",
-                      disabled: true,
-                    },
-                  ]}
-                />
-              </div>
-
-              <div className="my-5">
-                <h1 className="text-black text-base my-1 font-semibold">
-                  Cupon Enable Status
-                </h1>
-                <Input
-                  className="py-3 border border-gray-300 text-black  text-xl"
-                  placeholder="Affiliate Shopping"
-                />
-              </div>
-            </div>
-            <div className="">
-              <Button className="bg-[#CA3160] text-lg px-7 py-5">UPDATE</Button>
-              <Button className="text-lg px-7 py-5 mx-4 uppercase ">
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </Drawer>
-
-        <h1 className="lg:text-3xl text-xl font-bold text-[#221ECF] my-2">
-          UpDate Recharge / BBPS Transactions
-        </h1>
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md ">
-            <div className="flex flex-wrap justify-between">
-              <div className="flex items-center bg-gray-50 border py-[4px] px-2 rounded-md mb-4">
-                {/* <Button className=" py-5"> */}
+            <div className="flex items-center flex-wrap justify-between">
+              <div className="flex items-center bg-gray-50 border py-[4px] px-2 rounded-md ">
                 <Select
                   bordered={false}
                   defaultValue="Username"
@@ -396,15 +233,13 @@ const BBPSReports = () => {
                   <Option value="number">Number</Option>
                   <Option value="operator">Operator</Option>
                 </Select>
-                {/* </Button> */}
-
-                {/* <Space direction="vertical"> */}
 
                 {/* Reuse_Component  */}
                 <InputSearchComp
                   handelchange={(e) => {
                     setSearched(e.target.value);
                   }}
+                  placeholder={selectSearch}
                 />
                 {/* </Space> */}
                 <FiSearch className="mx-2 md:text-xl text-5xl" />
@@ -419,31 +254,13 @@ const BBPSReports = () => {
                 </div>
 
 
-                <Button className="bg-gray-50 py-5">
-                  <RangePicker
-                    bordered={false}
-                    disabledDate={disabled7DaysDate}
-                  />
-                </Button>
+                <DatePickerComp />
 
                 <div className="sm:block hidden">
-                  <Button
-                    onClick={ExportBBPSReportTable}
-                    className="bg-green-50 py-5 px-4 border border-green-500"
-                  >
-                    <CiExport className="text-green-600 text-2xl" />
-                    <span className="text-green-600 text-base font-semibold">
-                      Export
-                    </span>
-                  </Button>
+                  <ExportPdfBtn onClick={ExportBBPSReportTable} />
                 </div>
 
-                <Button className="sm:w-auto w-full bg-blue-50 py-5 px-4 border border-blue-500">
-                  <GrRefresh className="text-blue-600 text-2xl" />
-                  <span className="text-blue-600 text-base font-semibold">
-                    Refresh
-                  </span>
-                </Button>
+                <RefreshBtn title={"Refresh"} />
 
                 <div className="sm:hidden block">
                   <div className="flex justify-between">
@@ -452,29 +269,24 @@ const BBPSReports = () => {
                       handelSelectChange={(value) => setselectOption(value)}
                     />
                     {/* Export TableComponent */}
-                    <Button
+                    <ExportPdfBtn
                       onClick={ExportBBPSReportTable}
-                      className="bg-green-50 py-5 px-4 border border-green-500"
-                    >
-                      <CiExport className="text-green-600 text-2xl" />
-                      <span className="text-green-600 text-base font-semibold">
-                        Export
-                      </span>
-                    </Button>
+                    />
 
                   </div>
                 </div>
+
               </div>
             </div>
-            <Table
-              className="overflow-x-scroll no-scrollbar bg-white  rounded-lg my-5"
-              rowSelection={rowSelection}
+
+
+            <TableComp
               columns={columns}
               dataSource={filterSelectData}
               pagination={{
                 pageSize: 10,
               }}
-            ></Table>
+            />
           </Card>
         </div>
       </div>

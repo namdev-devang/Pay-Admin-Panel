@@ -3,7 +3,7 @@ import { Option } from "antd/es/mentions";
 import React, { useState } from "react";
 
 const StatusCheckFilter = (props) => {
-  const { handelSelectChange, value } = props
+  const { handelSelectChange, value, } = props
   return (
     <div>
       <Select
@@ -12,7 +12,7 @@ const StatusCheckFilter = (props) => {
           height: 45,
         }}
         defaultValue="All"
-        className="w-1/2 border mx-4  font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 "
+        className=" border  font-semibold text-gray-600 rounded-lg focus:border bg-gray-50 "
         placeholder="Search Status..."
         value={value}
         onChange={handelSelectChange}

@@ -1,5 +1,6 @@
-import { Table } from 'antd'
+import { Card, Table } from 'antd'
 import React from 'react'
+import TableComp from '../../Component/TableComp';
 
 const columns = [
 
@@ -43,10 +44,12 @@ const SubCategory = () => {
         </h1>
       </div>
 
-      <Table
+      <Card>
+      <TableComp
         columns={columns}
       // dataSource={dataSource}
       />
+      </Card>
     </>
   )
 }

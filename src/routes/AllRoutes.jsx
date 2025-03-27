@@ -12,7 +12,7 @@ import WithdrawRequest from "../pages/ManageUser/WithdrawRequest";
 import AffilliateBanners from "../pages/master/AffilliateBanners";
 import Banners from "../pages/master/Banners";
 import MasterServices from "../pages/master/MasterServices";
-import Otps from "../pages/master/Otp's";
+import Otps from "../pages/master/Otp";
 import Nortification from "../pages/Nortification";
 import RefoundRequest from "../pages/RefoundRequest";
 import BBPSReports from "../pages/Report/BBPSReports";

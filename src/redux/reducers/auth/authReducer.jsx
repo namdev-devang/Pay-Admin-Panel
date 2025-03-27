@@ -1,14 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authLogin } from "../actions/authAction";
+import { authLogin } from "../../actions/auth/authAction";
 
 const initialState = {
     user: null,
     loading: false,
     error: null,
-    tokens: {
-        accessToken: localStorage.getItem("accessToken") || null,
-        refreshToken: localStorage.getItem("refreshToken") || null,
-    },
+
 }
 
 const authSlice = createSlice({

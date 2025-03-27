@@ -58,13 +58,13 @@ const items = [
       "5",
       <Link to="/master-affilliate-banners"></Link>
     ),
-    getItem("- OTP's", "6", <Link to="/master-otps"></Link>),
+    getItem("- OTP", "6", <Link to="/master-otps"></Link>),
   ]),
 
   getItem("Manage User", "sub2", <TeamOutlined />, [
     getItem("- List", "7", <Link to="/users-list"></Link>),
     getItem("- Kyc Request", "8", <Link to="/user-list-kyc-request"></Link>),
-    getItem("- Sub Category", "9", <Link to="/user-list-sub-category"></Link>),
+    // getItem("- Sub Category", "9", <Link to="/user-list-sub-category"></Link>),
     getItem(
       "- New Kyc Request",
       "10",
@@ -357,12 +357,11 @@ const Index = (ChildComponent) => () => {
         <div className="flex relative h-full">
           <div
             id="sidebardScroll"
-            className={` absolute md:static z-10 top-0  ${collapsed ? "-left-full md:w-[10%] lg:w-[14%]  " : "left-0 w-72  md:w-0"
+            className={` absolute md:static z-10 top-0  ${collapsed ? "-left-full md:w-[10%] lg:w-[14%]" : "left-0 w-72  md:w-0"
               } bg-white  overflow-y-auto no-scrollbar h-screen transition-all duration-100 ease-linear`}
           >
             <Sider
               collapsed={collapsed}
-              // onCollapse={collapsed}
               className="bg-white h-screen w-full"
             >
               <Menu

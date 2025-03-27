@@ -1,52 +1,60 @@
-import { Table } from 'antd'
-import React from 'react'
+import { Card, Table } from 'antd'
+import React, { useEffect } from 'react'
+import Heading from '../Component/Heading';
+import TableComp from '../Component/TableComp';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAffilateStoreData } from '../redux/actions/AffilateStoreAct/AffilateStoreAct';
+// const loading = useSelector((state) => state?.rootreducer?.bannerReducer?.loading)
 
 const columns = [
 
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Name</h1>,
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">image</h1>,
+    dataIndex: "image",
+  },
+  {
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">name</h1>,
     dataIndex: "name",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Registration</h1>,
-    dataIndex: "registration",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">description</h1>,
+    dataIndex: "description",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">IP</h1>,
-    dataIndex: "ip",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">link</h1>,
+    dataIndex: "link",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Address</h1>,
-    dataIndex: "address",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">Action</h1>,
+    dataIndex: "Action",
   },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">Status</h1>,
-    dataIndex: "status",
-  },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">MPIN</h1>,
-    dataIndex: "mpin",
-  },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">Balance</h1>,
-    dataIndex: "balance",
-  },
-
 ];
 
 const AffiliateStore = () => {
+  const dispatch = useDispatch()
+  const affilatestoreData = useSelector((state) => state?.rootreducer?.affilateStoreReducer?.data);
+  const loading = useSelector((state) => state?.rootreducer?.affilateStoreReducer?.loading);
+
+  console.log(affilatestoreData, "affilatestoreData")
+
+
+  useEffect(() => {
+    dispatch(fetchAffilateStoreData())
+  }, [dispatch]);
+
   return (
     <>
-      <div className="flex items-center justify-between my-5">
-        <h1 className="md:text-3xl text-2xl text-[#221ECF] font-bold my-2">
-          AffiliateStore
-        </h1>
+      <div className="flex items-center justify-between my-4">
+        <Heading title={"AffiliateStore"} />
       </div>
 
-      <Table
-        columns={columns}
-      // dataSource={dataSource}
-      />
+      <Card >
+        <TableComp
+          loading={loading}
+          columns={columns}
+          dataSource={affilatestoreData}
+        />
+      </Card>
     </>
   )
 }

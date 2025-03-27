@@ -1,54 +1,40 @@
-import { Button, Card, Drawer, Form, message, Select, Space, Table, Tooltip } from "antd";
+import { Button, Card, Drawer, Form, message, Select, Space, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "antd";
 import { CopyOutlined, DownOutlined } from "@ant-design/icons";
-import { AudioOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { BiCross } from "react-icons/bi";
-import { BsCrosshair } from "react-icons/bs";
-import { RxCross1, RxCross2 } from "react-icons/rx";
 import { FiSearch } from "react-icons/fi";
 import { Option } from "antd/es/mentions";
 import { FaUserEdit } from "react-icons/fa";
-import { GrRefresh, GrUpdate } from "react-icons/gr";
-import CryptoJS from "crypto-js";
 import InputSearchComp from "../../Component/InputSearchComp";
-import StatusCheckFilter from "../../Component/StatusCheckFilter";
 import TableComp from "../../Component/TableComp";
-import axios from "axios";
-import { render } from "@react-pdf/renderer";
-import { IoAddCircleSharp } from "react-icons/io5";
+import ClosableBtnDrawer from "../../Component/ClosableBtnDrawer";
+import RefreshBtn from "../../Component/RefreshBtn";
+import Heading from "../../Component/Heading";
+import AddonBtn from "../../Component/AddonBtn";
+import DrawerHeading from "../../Component/DrawerHeading";
+import { useDispatch, useSelector } from "react-redux";
+import { addServicelist, fetchServiceData } from "../../redux/actions/masterServiceAct/masterServiceAction";
+import AddServiceFormDrawer from "../../Component/AddServiceFormDrawer";
 
 const MasterServices = () => {
+  const dispatch = useDispatch()
   const [form] = Form.useForm();
-  const [data, setData] = useState([])
   const [open, setOpen] = useState(false);
   const [AddServicesDrawer, setAddServicesDrawer] = useState(false)
   const [searched, setSearched] = useState("");
   const [selectOption, setselectOption] = useState("All");
-  console.log(selectOption, "selectOption")
   const [selectField, setselectField] = useState("service");
-  const [loading, setloading] = useState(false);
-  const [SelectUpdateStatus] = useState("")
-  console.log(SelectUpdateStatus, 'sksksk',)
   const [SelectedUser, setSelectedUser] = useState(null)
-  console.log(SelectedUser, "SelectedUser")
-  const [user, setUser] = useState([])
-  console.log(user, 'users')
-  console.log(SelectedUser, "SelectedUser")
+  const ServiceData = useSelector((state) => state?.rootreducer?.masterServiceReducer?.data);
+  const loading = useSelector((state) => state?.rootreducer?.masterServiceReducer?.loading);
+  console.log(loading)
 
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(fetchServiceData())
+  }, [dispatch]);
 
-  const handelSelectChange = (e) => {
-    setselectOption(e.target.value);
-  };
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
 
   const onClose = () => {
     setOpen(false);
@@ -56,37 +42,49 @@ const MasterServices = () => {
 
   const handelSave = () => {
     const lsStoreData = JSON.parse(localStorage.getItem("datasource")) || []
-
     const updateUser = lsStoreData.map((item) => item?._id === SelectedUser?._id ? SelectedUser : item)
     localStorage.setItem("datasource", JSON.stringify(updateUser))
-    // setUser(updateUser)
     setOpen(false)
 
   }
 
-  const handleChange = (value) => {
-    // console.log(`selected ${value}`);
-  };
-
-  const handelSumbit = (values) => {
+  const handelSumbit = async (values) => {
     try {
-      const existingData = JSON.parse(localStorage.getItem('datasource')) || [];
-      const updatedData = [...existingData, values];
+      const resultAction = await dispatch(addServicelist(values));
 
-      localStorage.setItem('datasource', JSON.stringify(updatedData));
-      message.success('Data submitted successfully!');
-      form.resetFields();
+      if (addServicelist.fulfilled.match(resultAction)) {
+        console.log("Service added successfully:", resultAction.payload);
+
+        setAddServicesDrawer(false);
+        form.resetFields();
+
+        message.success(resultAction.payload.Remarks);
+      } else {
+        console.error("Failed to add service:", resultAction.payload);
+
+        message.error(resultAction.payload.Remarks);
+      }
     } catch (error) {
-      message.error('Failed to save data!');
-      console.log(error, 'error')
+      console.error("Unexpected error:", error);
+
+      message.error("An unexpected error occurred. Please try again.");
     }
-    // navigate('/users-list')
-    setAddServicesDrawer(false)
   };
 
-  const handleClear = () => {
-    form.resetFields();
-  };
+  // try {
+  //   const existingData = JSON.parse(localStorage.getItem('datasource')) || [];
+  //   const updatedData = [...existingData, values];
+
+  //   localStorage.setItem('datasource', JSON.stringify(updatedData));
+  //   message.success('Data submitted successfully!');
+  //   form.resetFields();
+  // } catch (error) {
+  //   message.error('Failed to save data!');
+  //   console.log(error, 'error')
+  // }
+  // // navigate('/users-list')
+  // setAddServicesDrawer(false)
+
 
   const columns = [
     {
@@ -109,7 +107,7 @@ const MasterServices = () => {
               type="link"
               onClick={() => {
                 navigator.clipboard.writeText(text);
-                message.success("Phone number copied!");
+                message.success("Id copied!");
               }}
             />
           </Tooltip>
@@ -207,7 +205,6 @@ message.success("Phone number copied!");
 
   const savedData = JSON.parse(localStorage.getItem("datasource"))
 
-
   const dataSource = savedData?.map((i) => ({
     _id: i._id,
     name: i.name,
@@ -217,72 +214,9 @@ message.success("Phone number copied!");
     action: true,
   }));
 
-  const dataArr = [
-    {
-      srno: 1,
-      service: "Digital Marketing",
-      debit: "10.00",
-      repurchase: "5",
-      credit: "12.50",
-      primepoint: 3.50,
-      status: "Active",
-    },
-    {
-      srno: 2,
-      service: "Web Hosting",
-      debit: 20.00,
-      repurchase: 8,
-      credit: 25.00,
-      primepoint: 45.00,
-      status: "Pending",
-    },
-    {
-      srno: 3,
-      service: "SEO Optimization",
-      debit: 15.00,
-      repurchase: 2,
-      credit: 18.00,
-      primepoint: 15.00,
-      status: "Blocked",
-    },
-    {
-      srno: 4,
-      service: "Cloud Services",
-      debit: 5.00,
-      repurchase: 1,
-      credit: 7.00,
-      primepoint: 20.00,
-      status: "Active",
-    },
-  ];
 
-  const decryptFunc = (data) => {
-    const decryptData = CryptoJS.AES.decrypt(data.Data, "kanhape");
-    return JSON.parse(decryptData.toString(CryptoJS.enc.Utf8));
-  };
-
-  const fetchData = async () => {
-    try {
-      setloading(true)
-      const response = await axios.get(
-        "https://development-api.payzo.in/api/service/list"
-      );
-      const dec = decryptFunc(response.data);
-      setData(dec);
-      setloading(false);
-    } catch (error) {
-      // setError(error);
-      setloading(false);
-      console.log(error, "eror")
-    }
-  };
-  console.log(data, "data");
-
-  // localStorage.setItem("datasource", JSON.stringify(data)); // Add Data in LS -> ⭐
-  const displayData = selectOption && selectOption !== "All" ? dataSource.filter((item) => item.type === selectOption) : dataSource;
-
-  console.log("Selected Option:", selectOption);
-  // console.log("Filtered Data:", filterSelectData);
+  // localStorage.setItem("datasource", JSON.stringify(ServiceData)); // Add Data in LS -> ⭐
+  const displayData = selectOption && selectOption !== "All" ? dataSource.filter((item) => item.type === selectOption) : ServiceData;
 
 
   return (
@@ -294,8 +228,8 @@ message.success("Phone number copied!");
             SelectedUser && (
               <>
                 <div className="flex items-center justify-between my-3">
-                  <h1 className="text-2xl font-bold text-[#5a58eb]">Edit Services</h1>
-                  <RxCross1 onClick={onClose} className="cursor-pointer text-xl" />
+                  <DrawerHeading title={"Edit Services"} />
+                  <ClosableBtnDrawer onClick={onClose} />
                 </div>
 
                 <Form
@@ -373,142 +307,51 @@ message.success("Phone number copied!");
         <Drawer width={520} closable={false} onClose={() => setAddServicesDrawer(false)} open={AddServicesDrawer} >
           <div className="mx-4">
             <div className="flex items-center justify-between my-3">
-              <h1 className="text-2xl font-bold text-[#5a58eb]">Add_Services</h1>
-              <Button onClick={() => setAddServicesDrawer(false)} type="text" className="cursor-pointer text-xl">
-                <RxCross2 />
-              </Button>
+              <DrawerHeading title={"Add_Services"} />
+              {/* Reuse Component */}
+              <ClosableBtnDrawer onClick={() => setAddServicesDrawer(false)} />
             </div>
 
-            <Form
-              className="my-10"
+            {/* Reuse */}
+            <AddServiceFormDrawer
               form={form}
               onFinish={handelSumbit}
-            >
-              <Form.Item
-                name="_id"
-                rules={[
-                  { type: 'string', required: true, message: 'Please input your id!' },
-                ]}
-              >
-                <Input
-                  className="py-3 border border-gray-300 text-black text-lg font-bold"
-                  placeholder="Enter id..."
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="image"
-                rules={[
-                  { type: 'string', required: true, message: 'Please input your image url!' },
-                ]}
-              >
-                <Input
-                  className="py-3 border border-gray-300 text-black text-lg font-bold"
-                  placeholder="Enter image url..."
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="name"
-                rules={[
-                  { required: true, message: 'Please input your name!' },
-                  // {
-                  //   validator: (_, value) => {
-                  //     if (!value || (value.length >= 4 && value.length <= 10)) {
-                  //       return Promise.resolve();
-                  //     }
-                  //     return Promise.reject(new Error('Phone number must be between 4 and 10 characters!'));
-                  //   },
-                  // },
-                ]}
-              >
-                <Input
-                  className="py-3 border border-gray-300 text-black text-lg font-bold"
-                  placeholder="Enter name..."
-                />
-              </Form.Item>
-
-
-              <div className="my-5">
-                <Form.Item
-                  name="section"
-                  rules={[
-                    { type: 'section', required: true, message: 'Please enter a valid section!' },
-                  ]}
-                >
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-lg font-bold"
-                    placeholder="Enter your section..."
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="route"
-                  rules={[
-                    { required: true, message: 'Please input your route!' },
-                  ]}
-                >
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-lg font-bold"
-                    placeholder="Enter route..."
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="type"
-                  rules={[
-                    { required: true, message: 'Please input your offer!' },
-                  ]}
-                >
-                  <Input
-                    className="py-3 border border-gray-300 text-black text-lg font-bold"
-                    placeholder="Enter your offer..."
-                  />
-                </Form.Item>
-
-              </div>
-
-              <div className="flex">
-                <Button
-                  htmlType="submit"
-                  className="uppercase bg-[#CA3160] text-lg px-7 py-6 rounded-lg font-semibold text-white"
-                >
-                  Submit
-                </Button>
-                <Button
-                  className="uppercase text-lg px-7 py-6 rounded-lg font-semibold mx-5 border border-gray-600"
-                  onClick={handleClear}
-                >
-                  Clear
-                </Button>
-              </div>
-            </Form>
+              onClick={() => { form.resetFields(); }}
+            />
           </div>
         </Drawer>
 
+
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-[#221ECF] my-4 ">Services</h1>
-          <Button onClick={() => setAddServicesDrawer(true)} className="py-5 lg:text-base font-bold uppercase"><IoAddCircleSharp className="text-xl" /> Add_Services</Button>
+          {/* Reuse Component */}
+          <Heading title={"Services"} />
+
+          {/* Reuse Component */}
+          <AddonBtn onClick={() => setAddServicesDrawer(true)} title={"Add_Services"} />
+
         </div>
+
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-20 shadow-md ">
             <div className="flex items-center flex-wrap justify-between">
-
               <div className="flex items-center bg-gray-50 border lg:py-[4px] lg:px-2 rounded-md mb-4 lg:mb-0">
                 {/* <Button className=" py-5"> */}
                 <Select
                   bordered={false}
+                  onChange={(val) => setselectField(val)}
                   defaultValue="service"
                   className=" bg-gray-50 rounded-lg focus:border-none"
                 >
-                  <Option value="service">service</Option>
+                  <Option value="service">Service</Option>
                   <Option value="status">Status</Option>
                   {/* <option value="email">Email Id</option> */}
                 </Select>
 
                 <InputSearchComp
                   handelchange={(e) => setSearched(e.target.value)}
+                  placeholder={selectField}
                 />
+
                 {/* </Space> */}
                 <FiSearch className="mx-2 lg:text-xl text-4xl  " />
               </div>
@@ -528,14 +371,10 @@ message.success("Phone number copied!");
                   <Option value="All">All</Option>
                   <Option value="Cashback">Cashback</Option>
                   <Option value="GCB">GCB</Option>
-                  {/* <Option value="Blocked">Blocked</Option> */}
                 </Select>
-                <Button onClick={() => fetchData()} className="bg-blue-50 py-5 px-4 border border-blue-500">
-                  <GrRefresh className="text-blue-600 text-2xl" />
-                  <span className="text-blue-600 text-base font-semibold">
-                    Refresh
-                  </span>
-                </Button>
+
+                {/* Component Reuse */}
+                <RefreshBtn title={"Refresh"} onClick={() => dispatch(fetchServiceData())} />
               </div>
             </div>
 

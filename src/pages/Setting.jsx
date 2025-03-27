@@ -1,8 +1,8 @@
-import { Table } from 'antd'
+import { Card, Table } from 'antd'
 import React from 'react'
+import TableComp from '../Component/TableComp';
 
 const columns = [
-
   {
     title: <h1 className="text-[#323197] text-lg font-bold">Name</h1>,
     dataIndex: "name",
@@ -43,10 +43,12 @@ const Setting = () => {
         </h1>
       </div>
 
-      <Table className='my-10'
-        columns={columns}
-      // dataSource={dataSource}
-      />
+      <Card>
+        <TableComp
+          columns={columns}
+        // dataSource={dataSource}
+        />
+      </Card>
     </>
   )
 }

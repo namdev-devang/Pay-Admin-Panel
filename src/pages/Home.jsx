@@ -6,8 +6,8 @@ import Charts2 from "../Chart/Charts2";
 import Table_Pagination from "../Component/Table_Pagination";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown } from "antd";
-import UpdateUserDrawer from "./Report/UpdateUserDrawer";
 import { useDispatch, useSelector } from "react-redux";
+import Heading from "../Component/Heading";
 
 const items = [
   {
@@ -79,10 +79,8 @@ const Home = () => {
   return (
     <>
       <div className=" md:p-4">
-        <div className="flex justify-between mx-4 my-4">
-          <h1 className="lg:text-2xl font-bold text-indigo-700">
-            User Analytics
-          </h1>
+        <div className="flex justify-between items-center mx-4 ">
+          <Heading title={"User Analytics"} />
           <Space direction="vertical">
             <RangePicker
               className="sm:w-full w-32"
@@ -155,7 +153,6 @@ const Home = () => {
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md">
             <div className="flex justify-between items-center">
               <h1 className="sm:text-xl font-bold">Recent Customers</h1>
-              <UpdateUserDrawer />
             </div>
             <Table_Pagination />
           </Card>

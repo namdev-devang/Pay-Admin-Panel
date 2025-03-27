@@ -1,17 +1,14 @@
 import {
   Button,
   Card,
-  Divider,
   Drawer,
   Form,
   message,
-  Modal,
   Select,
   Space,
-  Table,
   Tooltip,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "antd";
 import { CopyOutlined, DownOutlined } from "@ant-design/icons";
 import { Input } from "antd";
@@ -19,24 +16,23 @@ import { FiSearch } from "react-icons/fi";
 import jsPDF from "jspdf";
 import { Option } from "antd/es/mentions";
 import DatePickerComp from "../../Component/DatePickerComp";
-import ExportPdfTable from "../../Component/ExoortPdfTable";
 import StatusCheckFilter from "../../Component/StatusCheckFilter";
 import { FaUserEdit } from "react-icons/fa";
-// import UpdateUserDrawer from "../Report/UpdateUserDrawer";
-import { RxCross2 } from "react-icons/rx";
 import InputSearchComp from "../../Component/InputSearchComp";
 import TableComp from "../../Component/TableComp";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import UserAddform from "./UserAddform";
-import { GrRefresh } from "react-icons/gr";
-
-
-
+import ClosableBtnDrawer from "../../Component/ClosableBtnDrawer";
+import RefreshBtn from "../../Component/RefreshBtn";
+import Heading from "../../Component/Heading";
+import DrawerHeading from "../../Component/DrawerHeading";
+import AddonBtn from "../../Component/AddonBtn";
+import ExportPdfBtn from "../../Component/ExportPdfBtn";
+import autoTable from "jspdf-autotable";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserlist } from "../../redux/actions/UserlistAct/UserlistAct";
 
 const UserList = () => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const navigate = useNavigate()
   const [searched, setSearched] = useState("");
   const [AddUserDrawer, setAddUserDrawer] = useState(false)
   const [selectField, setselectField] = useState("name");
@@ -44,18 +40,18 @@ const UserList = () => {
   const [selectedUserUpdate] = useState("")
   const [selectOption, setselectOption] = useState("All")
   console.log(selectOption, "selectOption")
-  const [users, setUsers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [referId, setReferId] = useState();
   const [showInput, setShowInput] = useState({
     id: "",
     status: false,
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userAdd, setuserAdd] = useState('Select')
-  console.log(userAdd, "userAdd")
-  const [referId, setReferId] = useState();
-  // console.log(holdData)
-  // console.log(selectedUser, "s");
-  // console.log(users, "user");
+
+  const fetchUserlistData = useSelector((state) => state?.rootreducer?.fetchUserlistReducer?.data)
+  console.log(fetchUserlistData, "fetchUserlistData")
+  useEffect(() => {
+    dispatch(fetchUserlist())
+  }, [dispatch])
 
   const columns = [
     {
@@ -253,7 +249,6 @@ const UserList = () => {
     },
   ];
 
-
   const savedData = JSON.parse(localStorage.getItem("dataSource"));
 
   const dataSource = savedData?.map((i) => ({
@@ -271,24 +266,11 @@ const UserList = () => {
     action: true,
   }));
 
+
   // localStorage.setItem("dataSource", JSON.stringify(dataArr)); // Add Data in LS -> ⭐
 
   const displayData = selectOption && selectOption !== "All" ? dataSource.filter((item) => item.status === selectOption) : dataSource;
   console.log(displayData, "displayData")
-
-
-  const onClose = () => {
-    setOpen(false);
-    setSelectedUser(null);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSave = () => {
     const storedData = JSON.parse(localStorage.getItem("dataSource")) || [];
@@ -299,7 +281,6 @@ const UserList = () => {
 
     console.log(updatedUsers, "updatedUsers")
     localStorage.setItem("dataSource", JSON.stringify(updatedUsers));
-    // setUsers(updatedUsers);
     setOpen(false);
   };
 
@@ -318,12 +299,10 @@ const UserList = () => {
     setAddUserDrawer(false)
   };
 
-  const handleClear = () => {
-    form.resetFields();
+  const onClose = () => {
+    setOpen(false);
+    setSelectedUser(null);
   };
-
-  // const prabhu = "Mahadev"
-  const [open, setOpen] = useState(false);
 
   const handleAddRefer = (record) => {
     if (!referId) {
@@ -338,51 +317,57 @@ const UserList = () => {
     }
   };
 
-  const handelUserAdd = (value) => {
-    // if (value.length) {
-    //   setIsModalOpen(false)
-    // }
+  const ExportReportPdf = () => {
+    const doc = new jsPDF({
+      orientation: "landscape",
+    });
 
-    // setuserAdd(value)
-    // console.log(userAdd)
-  }
+    autoTable(doc, {
+      head: [
+        [
+          "#ID",
+          "NAME",
+          "PHONE",
+          "EMAIL",
+          "REFERED_BY",
+          "REGISTRATION",
+          "IP",
+          "ADDRESS",
+          "STATUS",
+          "MPIN",
+          "BALANCE",
+        ],
+      ],
+
+      body: dataSource.map((items) => [
+        items.id,
+        items.name,
+        items.phone,
+        items.email,
+        items.referedby,
+        items.registration,
+        items.ip,
+        items.address,
+        items.status,
+        items.mpin,
+        items.balance,
+      ]),
+    });
+
+    doc.save("User_Reports");
+  };
 
   return (
     <>
-      {/* <Modal className="" width={400} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <div className="p-3">
-          <h1 className="text-2xl font-bold ">Please Select Customer Type</h1>
-          <Divider />
-          <Select
-            onChange={handelUserAdd}
-            defaultValue="Select"
-            style={{
-              width: 326,
-              height: 40,
-              fontSize: 100,
-              fontWeight: 200
-            }}
-            className="bg-gray-50 rounded-lg mx-auto "
-          >
-            <Option style={{ fontWeight: 900, fontSize: 15 }} disabled >Select</Option>
-            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Master Distributor">Master Distributor</Option>
-            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Distributor">Distributor</Option>
-            <Option style={{ fontWeight: 900, fontSize: 15 }} value="Retailer">Retailer</Option>
-          </Select>
-        </div>
-
-      </Modal> */}
-
       <div>
         {/* Edit User */}
         <Drawer width={520} closable={false} onClose={onClose} open={open}>
           <div className="mx-4">
             <div className="flex items-center justify-between my-3">
-              <h1 className="text-2xl font-bold text-[#5a58eb]">Edit</h1>
-              <Button type="text" onClick={onClose} className="cursor-pointer text-xl">
-                <RxCross2 />
-              </Button>
+              <DrawerHeading title={"Edit_User"} />
+              <ClosableBtnDrawer onClick={onClose} />
             </div>
+
             {selectedUser && (
               <Form
                 autoComplete="off"
@@ -479,6 +464,7 @@ const UserList = () => {
                 </div>
               </Form>
             )}
+
           </div>
         </Drawer>
 
@@ -486,10 +472,8 @@ const UserList = () => {
         <Drawer width={520} closable={false} onClose={() => setAddUserDrawer(false)} open={AddUserDrawer} >
           <div className="mx-4">
             <div className="flex items-center justify-between my-3">
-              <h1 className="text-2xl font-bold text-[#5a58eb]">Add_User</h1>
-              <Button onClick={() => setAddUserDrawer(false)} type="text" className="cursor-pointer text-xl">
-                <RxCross2 />
-              </Button>
+              <DrawerHeading title={"Add_User"} />
+              <ClosableBtnDrawer onClick={() => setAddUserDrawer(false)} />
             </div>
 
             <Form
@@ -637,19 +621,24 @@ const UserList = () => {
                 </Button>
                 <Button
                   className="uppercase text-lg px-7 py-6 rounded-lg font-semibold mx-5 border border-gray-600"
-                  onClick={handleClear}
+                  onClick={() => { form.resetFields() }}
                 >
                   Clear
                 </Button>
               </div>
             </Form>
+
           </div>
         </Drawer>
 
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-[#221ECF] my-4">User</h1>
-          <Button onClick={() => setAddUserDrawer(true)} type="" className="py-5 lg:text-base font-bold">Add_User<IoAddCircleSharp className="text-xl" /></Button>
+          {/* Reuse Component */}
+          <Heading title={"User"} />
+
+          <AddonBtn onClick={() => setAddUserDrawer(true)} title={"Add_User"} />
+
         </div>
+
         <div className="my-5">
           <Card className="rounded-2xl border border-gray-300 mb-14 shadow-md">
             <div className="flex flex-wrap justify-between">
@@ -660,7 +649,7 @@ const UserList = () => {
                   defaultValue="name"
                   style={{ width: 100 }}
                   onChange={(value) => setselectField(value)}
-                  className=" bg-gray-50 rounded-lg "
+                  className=" bg-gray-50 rounded-lg"
                 >
                   <Option value="name">Name</Option>
                   <Option value="phone">Phone</Option>
@@ -670,11 +659,12 @@ const UserList = () => {
 
                 <InputSearchComp
                   handelchange={(e) => setSearched(e.target.value)}
+                  placeholder={selectField}
                 />
                 <FiSearch className="mx-2 lg:text-xl text-4xl  " />
               </div>
 
-              <div className="flex  flex-wrap items-center gap-5">
+              <div className="flex flex-wrap items-center gap-5">
                 <div className="sm:block hidden">
                   <StatusCheckFilter
                     value={selectOption}
@@ -689,29 +679,25 @@ const UserList = () => {
                 </span>
 
                 <div className="sm:block hidden">
-                  <ExportPdfTable />
+                  <ExportPdfBtn onClick={ExportReportPdf} />
                 </div>
-                <Button className="sm:w-auto w-full bg-blue-50 py-5 px-4 border border-blue-500">
-                  <GrRefresh className="text-blue-600 text-2xl" />
-                  <span className="text-blue-600 text-base font-semibold">
-                    Refresh
-                  </span>
-                </Button>
+
 
                 <div className="sm:hidden block">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4">
                     <StatusCheckFilter
                       value={selectOption}
                       handelSelectChange={(value) => setselectOption(value)}
                     />
-                    {/* Export TableComponent */}
-                    <ExportPdfTable />
+                    <ExportPdfBtn onClick={ExportReportPdf} />
                   </div>
                 </div>
+
+                <RefreshBtn title={"Refresh"} />
+
               </div>
             </div>
 
-            {/* Component Reuse in the Component folder */}
             <TableComp
               columns={columns}
               dataSource={displayData}

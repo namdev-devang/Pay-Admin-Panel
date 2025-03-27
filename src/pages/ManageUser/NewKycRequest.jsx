@@ -1,5 +1,7 @@
-import { Table } from 'antd'
+import { Card, Table } from 'antd'
 import React from 'react'
+import Heading from '../../Component/Heading';
+import TableComp from '../../Component/TableComp';
 
 const columns = [
 
@@ -38,15 +40,15 @@ const NewKycRequest = () => {
   return (
     <>
       <div className="flex items-center justify-between my-5">
-        <h1 className="md:text-3xl text-2xl text-[#221ECF] font-bold my-2">
-          NewKycRequest
-        </h1>
+        <Heading title={"NewKycRequest"} />
       </div>
 
-      <Table
+    <Card>
+      <TableComp
         columns={columns}
       // dataSource={dataSource}
       />
+    </Card>
     </>
   )
 }

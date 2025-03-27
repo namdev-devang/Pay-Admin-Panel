@@ -1,40 +1,39 @@
-import { Table } from 'antd'
-import React from 'react'
+import { Card, Table } from 'antd'
+import React, { useEffect } from 'react'
+import TableComp from '../Component/TableComp';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchIpAddressData } from '../redux/actions/IpAddressAct/IpAddressAct';
 
 const columns = [
 
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Name</h1>,
-    dataIndex: "name",
-  },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">Registration</h1>,
-    dataIndex: "registration",
-  },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">IP</h1>,
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">iP</h1>,
     dataIndex: "ip",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Address</h1>,
-    dataIndex: "address",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">name</h1>,
+    dataIndex: "name",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">Status</h1>,
-    dataIndex: "status",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">createdAt</h1>,
+    dataIndex: "createdAt",
   },
   {
-    title: <h1 className="text-[#323197] text-lg font-bold">MPIN</h1>,
-    dataIndex: "mpin",
+    title: <h1 className="text-[#323197] text-lg font-bold capitalize">updatedAt</h1>,
+    dataIndex: "updatedAt",
   },
-  {
-    title: <h1 className="text-[#323197] text-lg font-bold">Balance</h1>,
-    dataIndex: "balance",
-  },
-
 ];
 
 const IPAddress = () => {
+  const dispatch = useDispatch()
+  const IpAddressData = useSelector((state) => state?.rootreducer?.ipAddressReducer?.data);
+  console.log(IpAddressData, "IpAddressData")
+  console.log(IpAddressData, "IpAddressData")
+
+  useEffect(() => {
+    dispatch(fetchIpAddressData())
+  }, [dispatch]);
+
   return (
     <>
       <div className="flex items-center justify-between my-5">
@@ -43,10 +42,12 @@ const IPAddress = () => {
         </h1>
       </div>
 
-      <Table
-        columns={columns}
-      // dataSource={dataSource}
-      />
+      <Card>
+        <TableComp
+          columns={columns}
+          dataSource={IpAddressData}
+        />
+      </Card>
     </>
   )
 }

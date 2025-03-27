@@ -1,9 +1,12 @@
 import { Button, Card, Select, Table } from 'antd'
 import { Option } from 'antd/es/mentions';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FiSearch } from 'react-icons/fi';
 import { GrRefresh } from 'react-icons/gr';
 import InputSearchComp from '../../Component/InputSearchComp';
+import Heading from '../../Component/Heading';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOtp } from '../../redux/actions/OtpAct/OtpAct';
 
 const columns = [
 
@@ -39,12 +42,17 @@ const columns = [
 ];
 
 const Otp = () => {
+    const dispatch = useDispatch();
+    const fetchNotificationsData = useSelector((state) => state?.rootreducer?.fetchOtpReducer)
+    console.log(fetchNotificationsData, "jsjsjs")
+
+    useEffect(() => {
+        dispatch(fetchOtp());
+    }, [dispatch]);
     return (
         <>
-            <div className="flex items-center justify-between my-5">
-                <h1 className="md:text-3xl text-2xl text-[#221ECF] font-bold my-2">
-                    Otp's
-                </h1>
+            <div className="flex items-center justify-between my-4">
+                <Heading title={"Otp's"} />
             </div>
 
             <Card>
@@ -77,7 +85,7 @@ const Otp = () => {
                 </div>
                 <Table
                     columns={columns}
-                // dataSource={dataSource}
+                // dataSource={}
                 />
             </Card>
         </>
